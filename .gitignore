@@ -1,0 +1,14 @@
+# Evitar subir datos de contenedores
+pgdata/
+mongodata/
+
+# Evitar archivos temporales
+*.log
+*.tmp
+
+# Archivos de Docker
+.docker/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
