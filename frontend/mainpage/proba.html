@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Pantalla 3 Partes - Menú + Mapa</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    #contenedor {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    #menu {
+      width: 33.33%;
+      background-color: #1e293b;
+      color: white;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    #menu h2 {
+      margin-top: 0;
+      color: #38bdf8;
+      text-align: center;
+    }
+
+    #menu button {
+      background-color: #38bdf8;
+      border: none;
+      color: white;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 100%;
+    }
+
+    #menu button:hover {
+      background-color: #0ea5e9;
+    }
+
+    #mapa {
+      flex-grow: 1;
+      height: 100%;
+      width: 66.66%;
+    }
+  </style>
+</head>
+<body>
+  <div id="contenedor">
+    <div id="menu">
+      <div>
+        <h2>Opciones</h2>
+        <button onclick="centrar('madrid')">Centrar Madrid</button>
+        <button onclick="centrar('madrid')">Perfil</button>
+        <button onclick="centrar('madrid')">Buscar</button>
+        <button onclick="centrar('madrid')">Cerrar sesion</button>
+      </div>
+      <small>© Mapa con Leaflet & OpenStreetMap</small>
+    </div>
+
+    <div id="mapa"></div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <script>
+    const map = L.map('mapa').setView([40.4168, -3.7038], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    const ciudades = {
+      mexico: [19.4326, -99.1332],
+      madrid: [40.4168, -3.7038],
+      buenosaires: [-34.6037, -58.3816]
+    };
+
+    function centrar(nombre) {
+      const coords = ciudades[nombre];
+      if (coords) {
+        map.setView(coords, 12);
+        L.marker(coords)
+          .addTo(map)
+          .bindPopup(`Ubicación: ${nombre}`)
+          .openPopup();
+      }
+    }
+  </script>
+</body>
+</html>

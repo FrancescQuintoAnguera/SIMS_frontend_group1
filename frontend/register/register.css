@@ -1,0 +1,153 @@
+:root{
+  --brand-green:#A6EE36;
+  --brand-blue:#03A0FF;
+  --bg-dark:#0f2744;
+  --panel-bg: #12263f; /* slightly darker panel */
+  --muted: #94a3b8;
+}
+
+/* Steps visibility */
+.step{display:none}
+.step.active{display:block}
+
+.container-centered{max-width:760px;margin:0 auto;padding:1rem}
+
+/* Logo */
+body {
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%);
+  min-height: 100vh;
+}
+
+.logo-container{width:300px;height:250px;margin:18px auto;display:flex;justify-content:center;align-items:center}
+.logo-container img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+
+/* Card / box */
+.box{
+  background: var(--bg-dark);
+  border-radius:16px;
+  padding:24px;
+  color:#fff;
+  max-width:640px;
+  margin:18px auto;
+  box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+}
+
+.box h2{margin-top:0;margin-bottom:12px;font-size:1.25rem}
+
+/* Inputs */
+.box input[type="email"],
+.box input[type="password"],
+.box input[type="tel"],
+.box input[type="file"]{
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  box-sizing:border-box;
+  margin-bottom:12px;
+}
+
+/* Make these inputs visually consistent with login */
+.input-field{background: rgba(15, 39, 68, 0.7);border:1px solid rgba(59,130,246,0.3);color:#fff;transition:all .3s}
+.input-field::placeholder{color:var(--muted)}
+.input-field:focus{border-color:var(--brand-green);background:rgba(15,39,68,0.9);outline:none}
+
+/* Buttons */
+button{cursor:pointer}
+
+/* Primary button styled to match login (exact green) */
+.btn-primary{
+  background: #A6EE36;
+  color: #0e2a47; /* dark text like login's text-gray-900 */
+  border: none;
+  padding: 12px 16px;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 1rem;
+  display: inline-block;
+}
+.btn-primary.w-full{display:block;width:100%}
+.btn-primary:hover{filter:brightness(.98)}
+
+.btn-secondary{background:transparent;border:2px solid var(--brand-blue);color:var(--brand-blue);padding:8px 14px;border-radius:10px;font-weight:600}
+.btn-secondary:hover{background:var(--brand-blue);color:#fff}
+
+/* Glow behaviour (used by login) */
+.glow-button{transition:all .3s ease}
+.glow-button:hover{transform:translateY(-2px)}
+
+/* File input styling: hide native control and use label as button */
+.input-file{display:none}
+.file-name{display:inline-block;margin-left:0.75rem;color:#cbd5e1;font-size:0.95rem}
+
+/* Gray button for secondary file selectors */
+.btn-gray{background:#6b7280;color:#fff;border:none;padding:10px 16px;border-radius:0.75rem;font-weight:700}
+.btn-gray:hover{filter:brightness(.95)}
+
+/* Glow button like login */
+.glow-button{transition:all .3s ease}
+.glow-button:hover{transform:translateY(-2px)}
+
+/* Header */
+header{background:var(--bg-dark);padding:12px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo .ezy{color:var(--brand-blue);font-weight:800;font-size:1.35rem}
+.logo .ride{color:var(--brand-green);font-weight:800;font-size:1.35rem}
+nav a{color:#dbeafe;margin-left:12px;text-decoration:none}
+nav a.btn-primary{margin-left:16px}
+
+/* Video/canvas styles in step 4 */
+#video{width:100%;border-radius:8px;background:#000}
+#canvas{max-width:100%}
+
+/* Responsive tweaks */
+@media (max-width:640px){
+  .logo-container{width:220px;height:180px}
+  .box{padding:18px;margin:12px}
+  .container-centered{padding:0 12px}
+}
+
+/* Small utility */
+.text-center{text-align:center}
+
+/* Ensure clickable elements show pointer and add spacing between buttons inside .box */
+label[for], .btn-primary, .btn-secondary, .btn-gray { cursor: pointer; }
+
+.box .btn-primary, .box .btn-secondary, .box .btn-gray, .box label[for] {
+  margin-right: 12px;
+  margin-top: 12px;
+}
+
+/* Make capture button slightly more prominent */
+#capture{padding:12px 18px}
+
+/* Custom checkbox */
+.checkbox-wrapper{margin-top:8px}
+.checkbox{display:flex;align-items:center;gap:10px}
+.checkbox input{position:absolute;opacity:0;width:0;height:0}
+.checkbox-custom{width:20px;height:20px;border-radius:6px;border:2px solid rgba(255,255,255,0.15);display:inline-block}
+.checkbox-custom{position:relative}
+.checkbox input:checked + .checkbox-custom{background:var(--brand-green);border-color:var(--brand-green);}
+
+/* Checkmark */
+.checkbox-custom::after{
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid #062018; /* dark around the white to make it visible on green */
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0.6);
+  opacity: 0;
+  transition: all 0.12s ease-in-out;
+}
+.checkbox input:checked + .checkbox-custom::after{
+  opacity: 1;
+  transform: rotate(45deg) scale(1);
+  border-color: #062018;
+}
+
+/* focus style for keyboard users */
+.checkbox input:focus + .checkbox-custom{box-shadow:0 0 0 4px rgba(166,238,54,0.12);}
+.checkbox-label{color:#cbd5e1}
+.checkbox a{color:var(--brand-blue);text-decoration:underline}

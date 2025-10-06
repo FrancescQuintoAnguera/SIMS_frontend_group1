@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EzyRide - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body class="flex items-center justify-center p-4">
+    <!-- Header fijo arriba -->
+    <div class="fixed top-0 left-0 right-0 bg-[#384958] shadow-lg z-50">
+        <div class="w-full px-4 md:px-8 py-4 flex justify-between items-center">
+            <div class="text-3xl md:text-4xl font-extrabold pl-2">
+                <span class="text-[#A6EE36]">Ezy</span><span class="text-blue-400">Ride</span>
+            </div>
+            <div class="flex items-center gap-4 pr-2">
+                <span class="text-white text-lg md:text-xl">No tienes cuenta?</span>
+                <button onclick="goToRegister()" class="bg-[#A6EE36] text-gray-900 px-8 py-3 rounded-md font-semibold text-lg hover:bg-[#A6EE36] transition">
+                    Regístrate
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full max-w-lg mt-24">
+        <!-- Main Card -->
+        <div class="bg-[#0f2744] rounded-2xl p-10 shadow-2xl">
+            <!-- Logo -->
+            <div class="logo-container">
+                <img src="logo.png" alt="EzyRide Logo" class="w-full h-full object-contain">
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-6">
+                <div>
+                    <input 
+                        type="email" 
+                        id="email"
+                        placeholder="Email" 
+                        required
+                        class="input-field w-full px-4 py-3 rounded-lg text-white placeholder-gray-400"
+                    />
+                </div>
+
+                <div>
+                    <input 
+                        type="password" 
+                        id="password"
+                        placeholder="Password" 
+                        required
+                        class="input-field w-full px-4 py-3 rounded-lg text-white placeholder-gray-400"
+                    />
+                </div>
+
+                <button 
+                    type="submit"
+                    class="glow-button w-full bg-[#A6EE36] text-gray-900 py-3 rounded-lg font-bold text-lg hover:bg-[#A6EE36]"
+                >
+                    Log In
+                </button>
+
+                <div class="text-center">
+                    <a href="#" onclick="forgotPassword(event)" class="text-white hover:text-[#A6EE36] transition">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <button 
+                    type="button"
+                    onclick="enterAsGuest()"
+                    class="w-full bg-transparent border-2 border-blue-400 text-blue-400 py-3 rounded-lg font-semibold hover:bg-blue-400 hover:text-white transition"
+                >
+                    Enter as guest
+                </button>
+            </form>
+
+            <!-- Copyright -->
+            <div class="text-center mt-8 text-gray-400 text-xs">
+                COPYRIGHT © 2025 EzyRide
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>

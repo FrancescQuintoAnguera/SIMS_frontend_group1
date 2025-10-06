@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro paso a paso</title>
+  <link rel="stylesheet" href="register.css">
+</head>
+
+<body>
+  <!-- Header fijo arriba -->
+    <div class="fixed top-0 left-0 right-0 bg-[#384958] shadow-lg z-50">
+        <div class="w-full px-4 md:px-8 py-4 flex justify-between items-center">
+            <div class="text-3xl md:text-4xl font-extrabold pl-2">
+                <span class="text-[#A6EE36]">Ezy</span><span class="text-blue-400">Ride</span>
+            </div>
+            <div class="flex items-center gap-4 pr-2">
+                <span class="text-white text-lg md:text-xl">No tienes cuenta?</span>
+                <button onclick="goToRegister()" class="bg-[#A6EE36] text-gray-900 px-8 py-3 rounded-md font-semibold text-lg hover:bg-[#A6EE36] transition">
+                    Regístrate
+                </button>
+            </div>
+        </div>
+    </div>
+
+  <div class="w-full max-w-lg mt-24">
+
+    <div class="logo-container">
+    <img src="../login/logo.png" alt="EzyRide Logo" class="w-full h-full object-contain">
+  </div>
+
+  <form id="registro">
+    <!-- PASO 1: Datos personales -->
+    <div class="step active" id="step1">
+      <div class="box">
+        <h2>Paso 1: Datos personales</h2>
+  <label>Correo electrónico:</label><br>
+  <input class="input-field" type="email" name="email" required><br>
+
+  <label>Contraseña:</label><br>
+  <input class="input-field" type="password" id="password" name="password" required><br>
+
+  <label>Confirmar contraseña:</label><br>
+  <input class="input-field" type="password" id="confirm" required><br>
+
+  <label>Número de teléfono:</label><br>
+  <input class="input-field" type="tel" name="telefono" required pattern="[0-9]{9,15}"><br>
+
+  <button type="button" id="next1" class="btn-primary glow-button">Siguiente</button>
+      </div>
+    </div>
+
+    <!-- PASO 2: Carnet de conducir -->
+    <div class="step" id="step2">
+      <div class="box">
+        <h2>Paso 2: Subir carnet de conducir</h2>
+  <input class="input-file" id="carnet" type="file" name="carnet" accept="image/*" required>
+  <label for="carnet" class="btn-primary">Seleccionar archivo</label>
+  <span id="carnet-name" class="file-name">No seleccionado</span>
+  <br>
+  <button type="button" id="back2" class="btn-secondary">Atrás</button>
+  <button type="button" id="next2" class="btn-primary">Siguiente</button>
+      </div>
+    </div>
+
+    <!-- PASO 3: DNI -->
+    <div class="step" id="step3">
+      <div class="box">
+        <h2>Paso 3: Subir DNI (frontal)</h2>
+  <input class="input-file" id="dni" type="file" name="dni" accept="image/*" required>
+  <label for="dni" class="btn-primary">Seleccionar archivo</label>
+  <span id="dni-name" class="file-name">No seleccionado</span>
+  <br>
+  <button type="button" id="back3" class="btn-secondary">Atrás</button>
+  <button type="button" id="next3" class="btn-primary">Siguiente</button>
+      </div>
+    </div>
+
+    <!-- PASO 4: Foto en tiempo real y condiciones -->
+    <div class="step" id="step4">
+      <div class="box">
+        <h2>Paso 4: Foto en tiempo real</h2>
+  <video id="video" autoplay></video><br>
+  <button type="button" id="capture" class="btn-primary">Tomar foto</button><br>
+        <canvas id="canvas" style="display:none;"></canvas>
+        <input type="hidden" name="foto" id="foto"><br>
+
+        <div class="checkbox-wrapper">
+          <label class="checkbox">
+            <input type="checkbox" name="condiciones" required>
+            <span class="checkbox-custom" aria-hidden="true"></span>
+            <span class="checkbox-label">Acepto las <a href="#" id="terms-link">condiciones</a></span>
+          </label>
+        </div>
+        <br>
+
+  <button type="button" id="back4" class="btn-secondary">Atrás</button>
+  <button type="button" onclick="goToLogin()" class="btn-primary glow-button">Registrarse</button>
+      </div>
+    </div>
+  </form>
+
+  <script src="register.js"></script>
+</body>
+</html>
