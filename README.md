@@ -1,1 +1,1 @@
-# Sprint 1 (KickOff)o
+# Sprint 1 (KickOff)
