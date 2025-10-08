@@ -9,7 +9,7 @@ Para tener una structura de git limpia, cada nueva implementacion utilizara la c
 
 ## Cosas no reutilizables
 
-Para cosas no reutilizables, vamos a crear su propio modulo, allí dentro tendra 4 carpetas principales, Pages, Template, Style y Template
+Para cosas no reutilizables, vamos a crear su propio modulo, allí dentro tendra 4 carpetas principales, Pages, Template, Style y Script
 
 ## Cosas reutilizables (communas)
 
