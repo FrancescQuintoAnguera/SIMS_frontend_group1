@@ -14,3 +14,10 @@ Para cosas no reutilizables, vamos a crear su propio modulo, allí dentro tendra
 ## Cosas reutilizables (communas)
 
 Seguira la misma estructura que las no reutilizables pero no estara dentro de modulos, sinos que estara en common
+
+# Estructura html
+header -> un inframe del navbar
+
+main -> Todas las sections (importante el sidebar)
+
+footer -> Un iframe del footer
