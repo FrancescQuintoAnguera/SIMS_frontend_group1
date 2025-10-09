@@ -1,0 +1,66 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+.car-marker {
+  width: 30px;
+  height: 42px;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  line-height: 0;
+}
+.car-marker::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid #2a9d8f;
+}
+.car-marker svg {
+  display: block;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+  color: #2a9d8f;
+}
+.car-marker svg path {
+  transition: fill .12s ease, transform .12s ease;
+}
+.car-marker.selected svg {
+  transform: scale(1.07);
+  color: #1f78a6;
+}
+
+.car-popup {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+.car-popup .rent-btn {
+  margin-top: 6px;
+  padding: 6px 10px;
+  background: #146c94;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.car-popup .rent-btn:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+@media (max-width: 480px) {
+  .car-popup {
+    font-size: 13px;
+  }
+}
