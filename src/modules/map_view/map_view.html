@@ -1,26 +1,24 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mapa con Leaflet y OpenStreetMap</title>
+  <title>Map with Leaflet & OpenStreetMap</title>
 
-  <!-- CSS de Leaflet (sin integrity) -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+  <!-- Leaflet stylesheet (CDN) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
-  <!-- Tu hoja de estilos -->
+  <!-- Module stylesheet -->
   <link rel="stylesheet" href="map_view.css" />
 </head>
 <body>
+  <!-- Map container used by the module -->
   <div id="map"></div>
 
-  <!-- JS de Leaflet (sin integrity) -->
+  <!-- Leaflet core script (CDN) -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <!-- Tu script -->
+  <!-- Module script that renders markers and handles geolocation -->
   <script src="map_view.js"></script>
 </body>
 </html>
