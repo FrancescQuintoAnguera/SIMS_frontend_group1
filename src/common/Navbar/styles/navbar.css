@@ -1,0 +1,21 @@
+@import '../../style/common.css';
+
+header{
+    background-color: #3B3F48;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+header img{
+    padding: 3dvh;
+    height: 3dvh;
+}
+header button{
+    margin: 2dvh;
+    padding: 1.5dvh;
+    background-color: #A6EE36;
+    border: 0;
+    border-radius: 5px;
+    font-size: medium;
+}
