@@ -9,7 +9,8 @@ class MySidebar extends HTMLElement {
     container.innerHTML = `
       <style>
         :host {
-          font-family: 'Poppins';
+          font-family: 'Poppins', sans-serif;
+          display: block;
         }
 
         .overlay {
@@ -43,7 +44,17 @@ class MySidebar extends HTMLElement {
           transform: translateX(0);
         }
 
-        /* Header */
+        .close-button {
+          position: absolute;
+          top: 1vh;
+          right: 1vw;
+          background: none;
+          border: none;
+          color: white;
+          font-size: 2rem;
+          cursor: pointer;
+        }
+
         .header {
           background-color: #1f2937;
           padding: 2vh 1.25rem;
@@ -64,7 +75,6 @@ class MySidebar extends HTMLElement {
           color: #60a5fa;
         }
 
-        /* Menú */
         .menu {
           display: flex;
           flex-direction: column;
@@ -124,17 +134,16 @@ class MySidebar extends HTMLElement {
 
         .menu-text-main {
           font-weight: 600;
-          font-size: clamp(0.875rem, 1.8vw, 1.5rem);
+          font-size: clamp(1rem, 10vw, 1.5rem);
           line-height: 1.2;
         }
 
         .menu-text-sub {
-          font-size: clamp(0.75rem, 1.5vw, 1.25rem);
+          font-size: clamp(0.75rem, 8vw, 1.25rem);
           color: #9ca3af;
           line-height: 1.2;
         }
 
-        /* Footer */
         .footer {
           background-color: #1f2937;
           padding: 2vh 1.25rem;
@@ -175,21 +184,18 @@ class MySidebar extends HTMLElement {
       <div class="overlay"></div>
 
       <div class="sidebar">
-        <!-- Header -->
+        <button class="close-button" onclick="this.getRootNode().host.cerrar(this.getRootNode().querySelector('.sidebar'), this.getRootNode().querySelector('.overlay'))">×</button>
         <div class="header">
           <h1>
             <span class="logo-ezy">Ezy</span><span class="logo-ride">Ride</span>
           </h1>
         </div>
 
-        <!-- Menú -->
         <div class="menu">
-          <!-- Buscar -->
           <button class="menu-button" data-action="buscar">
             <div class="menu-icon bg-lime">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
               </svg>
             </div>
             <div class="menu-text">
@@ -198,12 +204,10 @@ class MySidebar extends HTMLElement {
             </div>
           </button>
 
-          <!-- Idioma -->
           <button class="menu-button" data-action="idioma">
             <div class="menu-icon">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
             </div>
             <div class="menu-text">
@@ -211,12 +215,10 @@ class MySidebar extends HTMLElement {
             </div>
           </button>
 
-          <!-- Atención -->
-          <button class="menu-button" data-action="atencion">
+          <button class="menu-button" data-action="atencion" onclick="window.location.href='/src/modules/chatbox/templates/chatbox.php'">
             <div class="menu-icon">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
               </svg>
             </div>
             <div class="menu-text">
@@ -226,18 +228,15 @@ class MySidebar extends HTMLElement {
           </button>
         </div>
 
-        <!-- Footer -->
         <div class="footer">
-          <button class="footer-button">
+          <button class="footer-button" data-action="settings">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
             </svg>
           </button>
 
-          <button class="footer-button">
+          <button class="footer-button" data-action="language">
             <img class="flag-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 750 500'%3E%3Cpath fill='%23c60b1e' d='M0 0h750v500H0z'/%3E%3Cpath fill='%23ffc400' d='M0 125h750v250H0z'/%3E%3C/svg%3E" alt="España">
           </button>
         </div>
@@ -249,23 +248,34 @@ class MySidebar extends HTMLElement {
     const sidebar = this.shadowRoot.querySelector(".sidebar");
     const overlay = this.shadowRoot.querySelector(".overlay");
 
-    // Evento para abrir el sidebar
-    document.addEventListener("abrir-sidebar", () => {
-      sidebar.classList.add("open");
-      overlay.classList.add("visible");
-    });
-
     // Cerrar sidebar al hacer clic fuera
-    overlay.addEventListener("click", () => this.cerrar(sidebar, overlay));
+    overlay.addEventListener("click", () => {
+      this.cerrar(sidebar, overlay);
+    });
 
     // Botones del menú
     const buttons = this.shadowRoot.querySelectorAll(".menu-button");
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
         const action = btn.getAttribute("data-action");
-        document.dispatchEvent(
-          new CustomEvent("menu-action", { detail: { action } })
-        );
+        if (action) {
+          document.dispatchEvent(
+            new CustomEvent("menu-action", { detail: { action } })
+          );
+        }
+      });
+    });
+
+    // Botones del footer
+    const footerButtons = this.shadowRoot.querySelectorAll(".footer-button");
+    footerButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const action = btn.getAttribute("data-action");
+        if (action) {
+          document.dispatchEvent(
+            new CustomEvent("footer-action", { detail: { action } })
+          );
+        }
       });
     });
   }
