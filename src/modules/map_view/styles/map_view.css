@@ -1,0 +1,86 @@
+/* Ocupa toda la pantalla */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+/* Marcador tipo gota: fondo verde con círculo azul dentro (sin imagen)
+   Usamos ::before para crear la punta inferior. */
+.car-marker {
+  width: 30px;
+  height: 42px;
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+.car-marker::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid #2a9d8f; /* punta */
+}
+.car-marker svg { display: block; }
+.car-marker svg path { transition: fill .12s ease, transform .12s ease; }
+.car-marker svg circle { transition: fill .12s ease, transform .12s ease; }
+
+/* Visual adjustments for the SVG marker. The SVG uses `stroke="currentColor"`
+  so you can change the stroke color by setting `color` on the container
+  (.car-marker). This is convenient to switch colors when selected. */
+.car-marker { line-height: 0; }
+.car-marker svg { filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35)); }
+
+/* Popup styling */
+/* (Popups/controls from previous iterations are left here for reference.) */
+.car-popup { font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
+.car-popup .rent-btn {
+  margin-top: 6px;
+  padding: 6px 10px;
+  background: #146c94;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.car-popup .rent-btn:disabled { opacity: 0.7; cursor: default; }
+
+/* Simple responsive tweaks */
+@media (max-width: 480px) {
+  .car-popup { font-size: 13px; }
+}
+
+/* Estado seleccionado para el marcador */
+.car-marker.selected svg { transform: scale(1.07); }
+/* When selected we change the container's color which updates the SVG stroke
+  because the SVG uses `stroke="currentColor"`. Adjust colors to taste. */
+.car-marker.selected svg { color: #1f78a6; }
+.car-marker svg { color: #2a9d8f; }
+
+/* Botón "Yo" estilizado */
+.leaflet-control-locate a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background-color: #2A9D8F;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.leaflet-control-locate a:hover {
+  background-color: #1f7f6f;
+}
