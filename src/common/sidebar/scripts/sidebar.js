@@ -68,7 +68,7 @@ class MySidebar extends HTMLElement {
         }
 
         .header .logo-ezy {
-          color: white;
+          color: #A6EE36;
         }
 
         .header .logo-ride {
@@ -287,12 +287,10 @@ class MySidebar extends HTMLElement {
     const overlay = this.shadowRoot.querySelector(".overlay");
     const searchInputContainer = this.shadowRoot.querySelector(".search-input-container");
 
-    // Cerrar sidebar al hacer clic fuera
     overlay.addEventListener("click", () => {
       this.cerrar(sidebar, overlay);
     });
 
-    // Botones del menú
     const buttons = this.shadowRoot.querySelectorAll(".menu-button");
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -307,7 +305,6 @@ class MySidebar extends HTMLElement {
       });
     });
 
-    // Botones del footer
     const footerButtons = this.shadowRoot.querySelectorAll(".footer-button");
     footerButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
