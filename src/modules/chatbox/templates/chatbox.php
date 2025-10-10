@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Chatbox EzyRide</title>
   <script src="/src/common/sidebar/scripts/sidebar.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 
   <style>
     body {
@@ -145,7 +145,6 @@
   </style>
 </head>
 <body>
-  <!-- Sidebar global -->
   <?php
     $sidebar_path = '/mnt/c/Users/moreno/Desktop/sprint1/frontend/SIMS_frontend_group1/src/common/sidebar/templates/sidebar.php';
     if (file_exists($sidebar_path)) {
@@ -155,9 +154,7 @@
     }
   ?>
 
-  <!-- Contenedor principal del chat -->
   <div class="container">
-    <!-- Historial de casos -->
     <div class="chat-sidebar">
       <button onclick="openSidebar()">☰</button>
       <h2>Historial de casos</h2>
@@ -168,10 +165,8 @@
       <div class="case">Caso #105 - En espera</div>
     </div>
 
-    <!-- Chatbox -->
     <div class="chatbox">
       <div class="chat-window" id="chat-window">
-        <!-- Mensajes aparecerán aquí -->
       </div>
       <div class="chat-input">
         <input type="text" id="message-input" placeholder="Escribe un mensaje...">

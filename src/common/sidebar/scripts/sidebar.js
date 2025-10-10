@@ -179,6 +179,30 @@ class MySidebar extends HTMLElement {
           height: clamp(1.25rem, 2.25vw, 1.875rem);
           border-radius: 0.25rem;
         }
+
+        .search-input-container {
+          padding: 2vh 1.25rem;
+          display: none;
+        }
+
+        .search-input-container.visible {
+          display: block;
+        }
+
+        .search-input {
+          width: 100%;
+          padding: 1vh 1rem;
+          border-radius: 0.5rem;
+          border: 1px solid #9ca3af;
+          background-color: #1f2937;
+          color: white;
+          font-size: clamp(0.9rem, 2vw, 1.2rem);
+          font-family: 'Poppins', sans-serif;
+        }
+
+        .search-input::placeholder {
+          color: #9ca3af;
+        }
       </style>
 
       <div class="overlay"></div>
@@ -192,6 +216,17 @@ class MySidebar extends HTMLElement {
         </div>
 
         <div class="menu">
+          <button class="menu-button" data-action="mapa">
+            <div class="menu-icon bg-lime">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 16.382V5.618a1 1 0 00-1.447-.894L15 7m-6 0l6-3"/>
+              </svg>
+            </div>
+            <div class="menu-text">
+              <div class="menu-text-main">Mapa</div>
+            </div>
+          </button>
+
           <button class="menu-button" data-action="buscar">
             <div class="menu-icon bg-lime">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -203,6 +238,9 @@ class MySidebar extends HTMLElement {
               <div class="menu-text-sub">dirección</div>
             </div>
           </button>
+          <div class="search-input-container">
+            <input type="text" class="search-input" placeholder="Introduce una dirección...">
+          </div>
 
           <button class="menu-button" data-action="idioma">
             <div class="menu-icon">
@@ -247,6 +285,7 @@ class MySidebar extends HTMLElement {
 
     const sidebar = this.shadowRoot.querySelector(".sidebar");
     const overlay = this.shadowRoot.querySelector(".overlay");
+    const searchInputContainer = this.shadowRoot.querySelector(".search-input-container");
 
     // Cerrar sidebar al hacer clic fuera
     overlay.addEventListener("click", () => {
@@ -258,7 +297,9 @@ class MySidebar extends HTMLElement {
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
         const action = btn.getAttribute("data-action");
-        if (action) {
+        if (action === "buscar") {
+          searchInputContainer.classList.toggle("visible");
+        } else if (action) {
           document.dispatchEvent(
             new CustomEvent("menu-action", { detail: { action } })
           );
@@ -283,6 +324,10 @@ class MySidebar extends HTMLElement {
   cerrar(sidebar, overlay) {
     sidebar.classList.remove("open");
     overlay.classList.remove("visible");
+    const searchInputContainer = this.shadowRoot.querySelector(".search-input-container");
+    if (searchInputContainer) {
+      searchInputContainer.classList.remove("visible");
+    }
   }
 }
 
