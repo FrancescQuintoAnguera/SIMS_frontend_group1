@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="../styles/login.css">
 </head>
 <body>
-    <iframe src="../../../common/Navbar/Template/navbar.html" frameborder="0"></iframe>
+    <?php include '../../../common/navBar/template/navbar.php'?>
+
+    <main>
+        <h1>Hola</h1>
+    </main>
 </body>
 </html>
