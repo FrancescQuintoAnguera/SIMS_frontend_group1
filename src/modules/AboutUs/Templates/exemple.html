@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EzyRide - Movilidad que se adapta a ti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Styles/exemple.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Leaflet CSS (reused from map_view) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span class="ezy">Ezy</span><span class="ride">Ride</span>
+        </div>
+        <nav>
+            <a href="#ofertas">Ofertas</a>
+            <a href="#" class="btn-primary">Conduce ya</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 id="eslogan"><span class="highlight">Ezy</span><span class="highlight-green">Ride</span> movilidad que se adapta a ti.</h1>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <h2>¿Quiénes somos?</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>
+                    En EzyRide creemos en una movilidad urbana más limpia, 
+                    accesible y sostenible. Somos una empresa joven e 
+                    innovadora que nace con la misión de transformar el 
+                    transporte en las ciudades a través de vehículos eléctricos.
+                </p>
+            </div>
+            <div class="about-image">
+                    <img src="../../../common/images/coche.png" alt="coche">
+            </div>
+        </div>
+    </section>
+
+    <!-- Ventajas Section -->
+    <section class="ventajas">
+        <h2>Ventajas</h2>
+        <div class="ventajas-grid">
+            <div class="ventaja-item">
+                <div class="ventaja-content">
+                    <h3>100% Eléctrico</h3>
+                    <p>Contribuye a reducir emisiones y ruido, creando ciudades más limpias y saludables.</p>
+                </div>
+                <div class="ventaja-image">
+                     <i class="fa-solid fa-plug-circle-check icon"></i>
+
+
+                </div>
+            </div>
+            <div class="ventaja-item">  
+                <div class="ventaja-content">
+                    <h3>Ahorro económico</h3>
+                    <p>Paga solo por el tiempo que lo usas, sin gastos extra, seguros ni mantenimiento.</p>
+                </div>
+                <div class="ventaja-image">
+                    <i class="fa-solid fa-piggy-bank icon"></i>
+
+                </div>
+            </div>
+            <div class="ventaja-item">
+                <div class="ventaja-content">
+                    <h3>Flexibilidad total</h3>
+                    <p>Úsalo cuando lo necesites: por minutos, horas o con una suscripción mensual.</p>
+                </div>
+                <div class="ventaja-image">
+                    <i class="fa-solid fa-road icon"></i>  
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-buttons">
+            <button class="btn-secondary">Ofertas</button>
+            <button class="btn-tertiary">Todos los precios</button>
+        </div>
+    </section>
+
+    <!-- Asistencia 24h Section -->
+    <section class="asistencia">
+        <div class="asistencia-container">
+            <div class="asistencia-content">
+                <h2>Asistencia 24h</h2>
+                <p>
+                    En nuestra empresa contamos con <strong>asistencia de mecánicos disponible las 24 horas</strong> del día, 
+                    los 7 días de la semana, para garantizar que nunca te quedes varado en caso de emergencia. 
+                    Nuestro equipo está siempre listo para ayudarte en cualquier situación, asegurando que puedas continuar tu 
+                    viaje sin preocupaciones. Además, contamos con <strong>estaciones de servicio</strong> equipadas para el 
+                    reabastecimiento de coches eléctricos, con puntos de carga rápida y segura que se adaptan a tus necesidades.
+                </p>
+                <p>
+                    Para tu tranquilidad, también ofrecemos <strong>atención al cliente las 24 horas</strong>, siempre listos 
+                    para resolver tus dudas, atender tus emergencias y brindarte el mejor servicio en cualquier momento. 
+                    Con nosotros, tienes la seguridad de estar acompañado en todo momento, tanto en la carretera como fuera de ella.
+                </p>
+            </div>
+            <div class="asistencia-image">
+                <img src="../../../common/images/mecanico.png" alt="mecanico">
+            </div>
+        </div>
+    </section>
+
+    <!-- Reseñas Section -->
+    <section class="resenas">
+        <h2>Reseñas</h2>
+        <div class="resenas-grid">
+            <div class="resena-card">
+                <p class="resena-text">"La mejor empresa del mundo"</p>
+                <div class="resena-autor">
+                    <div class="avatar"></div>
+                    <div class="autor-info">
+                        <p class="autor-nombre">María López</p>
+                        <p class="autor-descripcion">Usuaria desde 2022</p>
+                    </div>
+                </div>
+            </div>
+            <div class="resena-card">
+                <p class="resena-text">"El mejor coche en el que me he subido"</p>
+                <div class="resena-autor">
+                    <div class="avatar"></div>
+                    <div class="autor-info">
+                        <p class="autor-nombre">Carlos Ruiz</p>
+                        <p class="autor-descripcion">Cliente frecuente</p>
+                    </div>
+                </div>
+            </div>
+            <div class="resena-card">
+                <p class="resena-text">"Muy buena asistencia"</p>
+                <div class="resena-autor">
+                    <div class="avatar"></div>
+                    <div class="autor-info">
+                        <p class="autor-nombre">Ana Martínez</p>
+                        <p class="autor-descripcion">Usuaria premium</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donde encontrarnos Section -->
+    <section class="ubicacion">
+        <h2>¿Dónde encontrarnos?</h2>
+        <div class="ubicacion-container">
+            <div class="ubicacion-texto">
+                <p><strong>¡Estamos más cerca de lo que imaginas!</strong></p>
+                <p>Encuéntranos fácilmente y disfruta de todos nuestros servicios a solo unos minutos de ti.</p>
+            </div>
+            <div class="ubicacion-mapa">
+                    <!-- Mapa integrado reusing src/modules/map_view/map_view.js -->
+                    <div id="map" style="width:100%; height:400px; border-radius:8px; overflow:hidden;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-logo">
+                    <span class="ezy">Ezy</span><span class="ride">Ride</span>
+                </div>
+                <div class="footer-cta">
+                    <button class="btn-footer-primary">Regístrate o inicia sesión</button>
+                    <button class="btn-footer-secondary">Pide tu coche</button>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>EzyRide</h3>
+                    <ul>
+                        <li><a href="#">Contáctanos</a></li>
+                        <li><a href="#">Reseñas</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Empresa</h3>
+                    <ul>
+                        <li><a href="#">Quiénes somos</a></li>
+                        <li><a href="#">Servicios</a></li>
+                        <li><a href="#">Seguridad</a></li>
+                        <li><a href="#">Ofertas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Términos y condiciones</a></li>
+                        <li><a href="#">Privacidad</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-social">
+                <a href="#" aria-label="Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                <a href="#" aria-label="YouTube"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+                <a href="#" aria-label="Twitter"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg></a>
+                <a href="#" aria-label="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Efect fade-in and slide-up for the title and the text '¿Quiénes somos?'
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const aboutTitle = document.querySelector('.about h2');
+                if (aboutTitle) {
+                    aboutTitle.style.opacity = 1;
+                    aboutTitle.style.transform = 'none';
+                }
+            }, 300);
+            setTimeout(() => {
+                const aboutText = document.querySelector('.about-text p');
+                if (aboutText) {
+                    aboutText.style.opacity = 1;
+                    aboutText.style.transform = 'none';
+                }
+            }, 600);
+        });
+
+        // Writer effect for the slogan
+        window.addEventListener('DOMContentLoaded', function() {
+            const el = document.getElementById('eslogan');
+            if (!el) return;
+            const originalHTML = el.innerHTML;
+            // Quit the spans to get plain text
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = originalHTML;
+            let plainText = tempDiv.textContent || tempDiv.innerText || '';
+            let i = 0;
+            el.innerHTML = '';
+            function typeWriter() {
+                if (i <= plainText.length) {
+                    // PUT BACK SPANS
+                    let partial = plainText.slice(0, i);
+                    // Insert spans back in the right places
+                    let html = partial.replace(/^Ezy/, '<span class="highlight">Ezy</span>').replace(/Ride/, '<span class="highlight-green">Ride</span>');
+                    el.innerHTML = html;
+                    i++;
+                    setTimeout(typeWriter, 60);
+                }
+            }
+            typeWriter();
+        });
+
+        // Infinite horizontal scroll for the ventajas section
+        window.addEventListener('DOMContentLoaded', function() {
+            const grid = document.querySelector('.ventajas-grid');
+            if (!grid) return;
+            
+            //  Clone items to fill space for infinite scroll
+            const items = grid.querySelectorAll('.ventaja-item');
+            items.forEach(item => {
+                const clone = item.cloneNode(true);
+                grid.appendChild(clone);
+            });
+            
+            let velocidad = 1; // píxels for frame
+            let resetAt = grid.scrollWidth / 2;
+
+            function autoScroll() {
+                if (grid.scrollLeft >= resetAt) {
+                    grid.scrollLeft = 0;
+                } else {
+                    grid.scrollLeft += velocidad;
+                }
+                requestAnimationFrame(autoScroll);
+            }
+
+            // Wait a bit before starting the scroll to ensure proper layout
+            setTimeout(() => {
+                resetAt = grid.scrollWidth / 2;
+                autoScroll();
+            }, 500);
+        });
+    </script>
+    <!-- Leaflet JS and reused map script -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../../map_view/map_view.js"></script>
+</body>
+</html>
