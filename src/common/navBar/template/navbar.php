@@ -6,7 +6,7 @@
 </head>
 <body>
     <header>
-        <img src="../../images/logoName.png" alt="logo.png">
+        <img src="../../../common/images/logoName.png" alt="logo">
 
         <!--TODO: Hay que hacer una funcion para enrutar a register/login en caso de -->
         <button>
