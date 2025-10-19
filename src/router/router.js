@@ -34,7 +34,12 @@ async function navigateTo(urlPath) {
             throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
         const html = await response.text();
-        document.getElementById("app").innerHTML = html;
+        const appContainer = document.getElementById("app");
+        appContainer.innerHTML = html;
+        
+        // IMPORTANTE: Ejecutar scripts insertados dinámicamente
+        executeScripts(appContainer);
+        
         history.pushState({}, "", urlPath);
     } catch (error) {
         console.error('Error cargando la página:', error);
@@ -45,6 +50,28 @@ async function navigateTo(urlPath) {
             </div>
         `;
     }
+}
+
+function executeScripts(container) {
+    const scripts = container.querySelectorAll('script');
+    
+    scripts.forEach((oldScript) => {
+        const newScript = document.createElement('script');
+        
+        if (oldScript.src) {
+            newScript.src = oldScript.src;
+        } else {
+            newScript.textContent = oldScript.textContent;
+        }
+
+        Array.from(oldScript.attributes).forEach(attr => {
+            if (attr.name !== 'src') {
+                newScript.setAttribute(attr.name, attr.value);
+            }
+        });
+
+        oldScript.parentNode.replaceChild(newScript, oldScript);
+    });
 }
 
 window.navigateTo = navigateTo;
