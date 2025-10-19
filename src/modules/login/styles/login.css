@@ -1,10 +1,72 @@
-@import url('/src/common/style/common.css');
-@import url('/src/common/navBar/styles/navbar.css');
-
-*{
+main *, form * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
-iframe{
-    width: 100% !important;
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.login-container {
+    height: 80dvh;
+    background-color: #1D3854;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 400px;
+}
+
+form img {
+    width: 20dvh;
+    margin-bottom: 2rem;
+}
+
+input {
+    width: 100%;
+    color: #ffffff;
+    background-color: #132B43;
+    border: 0;
+    border-radius: 5px;
+    padding: 1.5dvh;
+    transition: transform 0.2s;
+}
+
+input:focus {
+    outline: 2px solid #A6EE36;
+    transform: scale(1.02);
+}
+
+.log-in{
+    width: 100%;
+    padding: 1dvh;
+    background-color: #A6EE36;
+    border: 0;
+    border-radius: 5px;
+}
+.enter-as-guest {
+    width: 100%;
+    max-width: 400px; /* mismo ancho que el form */
+    padding: 1dvh;
+    color: #03A0FF;
+    background-color: #132B43;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.enter-as-guest:hover {
+    transform: scale(1.02);
 }
