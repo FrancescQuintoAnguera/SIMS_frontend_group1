@@ -29,7 +29,7 @@ class MySidebar extends HTMLElement {
           position: fixed;
           top: 0;
           left: 0;
-          width: 40vw;
+          width: min(85vw, 400px);
           height: 100vh;
           background-color: #111827;
           transform: translateX(-100%);
@@ -51,17 +51,19 @@ class MySidebar extends HTMLElement {
           background: none;
           border: none;
           color: white;
-          font-size: 2rem;
+          font-size: clamp(1.5rem, 5vw, 2rem);
           cursor: pointer;
+          line-height: 1;
+          padding: 0.25rem;
         }
 
         .header {
           background-color: #1f2937;
-          padding: 2vh 1.25rem;
+          padding: 1.5vh 1rem;
         }
 
         .header h1 {
-          font-size: clamp(1.5rem, 3vw, 2.5rem);
+          font-size: clamp(1.125rem, 4vw, 1.5rem);
           font-weight: 700;
           color: white;
           margin: 0;
@@ -78,15 +80,16 @@ class MySidebar extends HTMLElement {
         .menu {
           display: flex;
           flex-direction: column;
-          margin-top: 2vh;
+          margin-top: 1vh;
           flex: 1;
+          overflow-y: auto;
         }
 
         .menu-button {
           display: flex;
           align-items: center;
-          gap: 1rem;
-          padding: 2vh 1.25rem;
+          gap: 0.75rem;
+          padding: 1.5vh 1rem;
           background: none;
           border: none;
           color: white;
@@ -108,8 +111,8 @@ class MySidebar extends HTMLElement {
           display: flex;
           align-items: center;
           justify-content: center;
-          width: clamp(2rem, 4vw, 3.5rem);
-          height: clamp(2rem, 4vw, 3.5rem);
+          width: clamp(2rem, 8vw, 2.5rem);
+          height: clamp(2rem, 8vw, 2.5rem);
           border-radius: 0.5rem;
           flex-shrink: 0;
         }
@@ -119,8 +122,8 @@ class MySidebar extends HTMLElement {
         }
 
         .menu-icon svg {
-          width: clamp(1.25rem, 2.5vw, 2rem);
-          height: clamp(1.25rem, 2.5vw, 2rem);
+          width: clamp(1rem, 4vw, 1.25rem);
+          height: clamp(1rem, 4vw, 1.25rem);
         }
 
         .menu-icon.bg-lime svg {
@@ -134,22 +137,22 @@ class MySidebar extends HTMLElement {
 
         .menu-text-main {
           font-weight: 600;
-          font-size: clamp(1rem, 10vw, 1.5rem);
+          font-size: clamp(0.875rem, 3.5vw, 1rem);
           line-height: 1.2;
         }
 
         .menu-text-sub {
-          font-size: clamp(0.75rem, 8vw, 1.25rem);
+          font-size: clamp(0.7rem, 3vw, 0.825rem);
           color: #9ca3af;
           line-height: 1.2;
         }
 
         .footer {
           background-color: #1f2937;
-          padding: 2vh 1.25rem;
+          padding: 1.5vh 1rem;
           display: flex;
           align-items: center;
-          gap: 1rem;
+          gap: 0.75rem;
         }
 
         .footer-button {
@@ -169,19 +172,19 @@ class MySidebar extends HTMLElement {
         }
 
         .footer-button svg {
-          width: clamp(1.25rem, 2vw, 1.75rem);
-          height: clamp(1.25rem, 2vw, 1.75rem);
+          width: clamp(1.125rem, 1.75vw, 1.5rem);
+          height: clamp(1.125rem, 1.75vw, 1.5rem);
           color: white;
         }
 
         .flag-img {
-          width: clamp(1.75rem, 3vw, 2.5rem);
-          height: clamp(1.25rem, 2.25vw, 1.875rem);
+          width: clamp(1.5rem, 2.5vw, 2rem);
+          height: clamp(1rem, 1.75vw, 1.5rem);
           border-radius: 0.25rem;
         }
 
         .search-input-container {
-          padding: 2vh 1.25rem;
+          padding: 1vh 1rem;
           display: none;
         }
 
@@ -196,7 +199,7 @@ class MySidebar extends HTMLElement {
           border: 1px solid #9ca3af;
           background-color: #1f2937;
           color: white;
-          font-size: clamp(0.9rem, 2vw, 1.2rem);
+          font-size: clamp(0.875rem, 1.5vw, 1rem);
           font-family: 'Poppins', sans-serif;
         }
 
@@ -325,6 +328,13 @@ class MySidebar extends HTMLElement {
     if (searchInputContainer) {
       searchInputContainer.classList.remove("visible");
     }
+  }
+
+  abrir() {
+    const sidebar = this.shadowRoot.querySelector(".sidebar");
+    const overlay = this.shadowRoot.querySelector(".overlay");
+    sidebar.classList.add("open");
+    overlay.classList.add("visible");
   }
 }
 

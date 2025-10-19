@@ -7,10 +7,12 @@ header{
     justify-content: space-between;
     align-items: center;
 }
+
 header img{
     padding: 3dvh;
     height: 3dvh;
 }
+
 header button{
     margin: 2dvh;
     padding: 1.5dvh;
@@ -18,4 +20,34 @@ header button{
     border: 0;
     border-radius: 5px;
     font-size: medium;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+header button:hover {
+    transform: scale(1.05);
+    background-color: #95dd25;
+}
+
+header button:active {
+    transform: scale(0.98);
+}
+
+/* Botón de menú hamburguesa */
+#menu-toggle {
+    background-color: transparent;
+    padding: 1dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#menu-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#menu-toggle svg {
+    color: white;
+    width: 24px;
+    height: 24px;
 }
