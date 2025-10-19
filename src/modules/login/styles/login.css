@@ -10,6 +10,7 @@ html, body {
 }
 
 .login-container {
+    height: 100%;
     background-color: #1D3854;
     display: flex;
     flex-direction: column;
