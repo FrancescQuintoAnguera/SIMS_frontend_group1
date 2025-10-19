@@ -5,17 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eazy Ride</title>
     <link rel="stylesheet" href="/common/style/common.css">
-    <link rel="stylesheet" href="/common/navBar/styles/navbar.css">
+    <link rel="stylesheet" href="/common/modules/navBar/styles/navbar.css">
+    <link rel="stylesheet" href="/common/modules/footer/styles/footer.css">
     
     <!-- Cargar el Web Component ANTES de usarlo -->
-    <script src="/common/sidebar/scripts/sidebar.js"></script>
+    <script src="/common/modules/sidebar/scripts/sidebar.js"></script>
 </head>
 <body>
-    <?php include_once __DIR__ . '/common/navBar/template/navbar.php'; ?>
-    <?php include_once __DIR__ . '/common/sidebar/templates/sidebar.php'; ?>
+    <header>
+        <?php include_once __DIR__ . '/common/modules/navBar/template/navbar.php'; ?>
+        <?php include_once __DIR__ . '/common/modules/sidebar/templates/sidebar.php'; ?>
+    </header>
     
     <main id="app">Cargando...</main>
     
+    <footer>
+        <?php include_once __DIR__ . '/common/modules/footer/template/footer.php';?>
+    </footer>
     <script src="/router/router.js"></script>
     <script src="/common/scripts/main.js"></script>
 </body>
