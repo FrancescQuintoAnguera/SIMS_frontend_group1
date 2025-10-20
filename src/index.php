@@ -22,7 +22,7 @@
     <footer>
         <?php include_once __DIR__ . '/common/modules/footer/template/footer.php';?>
     </footer>
-    <script src="/common/scripts/auth.js"></script>
+    <script src="/auth/auth.js"></script>
     <script src="/router/router.js"></script>
     <script src="/common/scripts/main.js"></script>
 </body>
