@@ -2,8 +2,8 @@
 
 const routes = {
     "/login": "/modules/login/template/login.php",
+    "/home": "/modules/home/template/home.php",
     "/register": "/modules/register/template/register.php",
-    "/home": "/modules/home/template/home.php"
 }
 
 async function navigateTo(urlPath) {
