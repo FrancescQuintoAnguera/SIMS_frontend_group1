@@ -1,0 +1,16 @@
+@import url("/common/style/common.css");
+
+.footer-container {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    color: #ffffff;
+    height: 100%;
+    width: 100%;
+    background-color: #1D3854;
+}
+
+.footer-container p {
+    margin: 1dvh;
+    font-size: 0.875rem;
+}
