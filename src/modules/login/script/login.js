@@ -1,5 +1,3 @@
-// El sistema de autenticación ahora usa auth.js
-
 setTimeout(() => {
     const loginForm = document.querySelector('.login-container form');
     const guestButton = document.querySelector('.enter-as-guest');
@@ -11,7 +9,6 @@ setTimeout(() => {
             const identifier = loginForm.querySelector('input[name="email"]').value;
             const password = loginForm.querySelector('input[name="password"]').value;
             
-            // Usar el sistema de autenticación global
             const result = window.auth.login(identifier, password);
             
             if (result.success) {
