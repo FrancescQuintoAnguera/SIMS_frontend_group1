@@ -1,26 +1,5 @@
 <?php
-// Leer sesiones desde archivo JSON (sin usar $_SESSION)
-define('SESSIONS_FILE', __DIR__ . '/../../../data/sessions.json');
-
-function getSessionsFromFile() {
-    if (!file_exists(SESSIONS_FILE)) {
-        return [];
-    }
-    $content = file_get_contents(SESSIONS_FILE);
-    return json_decode($content, true) ?? [];
-}
-
-$hasAuthCookie = isset($_COOKIE['authToken']);
-$username = null;
-
-if ($hasAuthCookie) {
-    $token = $_COOKIE['authToken'];
-    $sessions = getSessionsFromFile();
-    
-    if (isset($sessions[$token])) {
-        $username = $sessions[$token]['username'];
-    }
-}
+$isAuthenticated = isset($_COOKIE['authToken']) && !empty($_COOKIE['authToken']);
 ?>
 
 <header>
@@ -32,9 +11,9 @@ if ($hasAuthCookie) {
 
     <img src="/common/images/logoName.png" alt="logo">
 
-    <?php if ($username): ?>
-        <span class="username-display">
-            Hola, <?php echo htmlspecialchars($username); ?>
+    <?php if ($isAuthenticated): ?>
+        <span class="username-display" id="username-display">
+            Cargando...
         </span>
     <?php else: ?>
         <button id="register-button">

@@ -2,8 +2,6 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Credentials: true');
 
-// NO usar session_start() - usamos solo cookies y archivos JSON
-
 define('COOKIE_NAME', 'authToken');
 define('COOKIE_EXPIRY', 12 * 60 * 60); 
 define('SESSIONS_FILE', __DIR__ . '/../data/sessions.json');
@@ -36,7 +34,6 @@ function saveUsers($users) {
     file_put_contents($usersFile, json_encode($users, JSON_PRETTY_PRINT));
 }
 
-// Función para leer sesiones del archivo
 function getSessions() {
     if (!file_exists(SESSIONS_FILE)) {
         return [];
@@ -46,7 +43,6 @@ function getSessions() {
     return json_decode($content, true) ?? [];
 }
 
-// Función para guardar sesiones en archivo
 function saveSessions($sessions) {
     if (!is_dir(dirname(SESSIONS_FILE))) {
         mkdir(dirname(SESSIONS_FILE), 0777, true);
@@ -54,14 +50,12 @@ function saveSessions($sessions) {
     file_put_contents(SESSIONS_FILE, json_encode($sessions, JSON_PRETTY_PRINT));
 }
 
-// Limpiar sesiones expiradas
 function cleanExpiredSessions() {
     $sessions = getSessions();
     $now = time();
     $cleaned = [];
     
     foreach ($sessions as $token => $data) {
-        // Mantener solo sesiones no expiradas (12 horas para usuarios, 24 para guest)
         $expiry = $data['role'] === 1 ? (24 * 60 * 60) : COOKIE_EXPIRY;
         if (($data['createdAt'] + $expiry) > $now) {
             $cleaned[$token] = $data;
@@ -79,7 +73,6 @@ function generateToken() {
     return bin2hex(random_bytes(32));
 }
 
-// Función para guardar sesión en archivo
 function saveSession($token, $userData) {
     $sessions = cleanExpiredSessions();
     
@@ -94,7 +87,6 @@ function saveSession($token, $userData) {
     saveSessions($sessions);
 }
 
-// Función para obtener sesión actual desde archivo
 function getCurrentSession() {
     if (!isset($_COOKIE[COOKIE_NAME])) {
         return null;
@@ -110,7 +102,6 @@ function getCurrentSession() {
     return $sessions[$token];
 }
 
-// Función para eliminar una sesión
 function deleteSession($token) {
     $sessions = getSessions();
     
@@ -120,7 +111,6 @@ function deleteSession($token) {
     }
 }
 
-// Obtener la acción
 $action = $_GET['action'] ?? $_POST['action'] ?? '';
 
 switch ($action) {
@@ -149,7 +139,6 @@ switch ($action) {
         $token = generateToken();
         saveSession($token, $user);
         
-        // Crear cookie con 12 horas de expiración
         setcookie(COOKIE_NAME, $token, [
             'expires' => time() + COOKIE_EXPIRY,
             'path' => '/',
@@ -177,7 +166,6 @@ switch ($action) {
         
         $errors = [];
         
-        // Validaciones
         if (empty($username)) $errors['username'] = 'Campo vacío';
         if (empty($email)) $errors['email'] = 'Campo vacío';
         if (empty($password)) $errors['password'] = 'Campo vacío';
@@ -187,7 +175,6 @@ switch ($action) {
             exit;
         }
         
-        // Validar formato
         if (!preg_match('/^[a-zA-Z0-9_-]{3,20}$/', $username)) {
             $errors['username'] = 'El username debe tener 3-20 caracteres (letras, números, _ -)';
         }
@@ -202,7 +189,6 @@ switch ($action) {
         
         $users = getUsers();
         
-        // Verificar usuario único
         foreach ($users as $u) {
             if ($u['username'] === $username) {
                 $errors['username'] = 'El nombre de usuario ya existe';
@@ -217,7 +203,6 @@ switch ($action) {
             exit;
         }
         
-        // Crear nuevo usuario
         $newUser = [
             'id' => max(array_column($users, 'id')) + 1,
             'username' => $username,
@@ -229,7 +214,6 @@ switch ($action) {
         $users[] = $newUser;
         saveUsers($users);
         
-        // Auto-login
         $token = generateToken();
         saveSession($token, $newUser);
         
@@ -305,7 +289,6 @@ switch ($action) {
         $token = generateToken();
         saveSession($token, $guestUser);
         
-        // Cookie de 24 horas para invitado
         setcookie(COOKIE_NAME, $token, [
             'expires' => time() + (24 * 60 * 60),
             'path' => '/',
