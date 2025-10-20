@@ -166,23 +166,37 @@ function logout() {
 
 function register(username, email, password) {
     const users = getUsers();
+    const errors = {};
     
-    if (!username || !email || !password) {
-        return { success: false, message: "Todos los campos son obligatorios" };
+    // Validar username
+    if (!username) {
+        errors.username = "El nombre de usuario es obligatorio";
+    } else if (users.find(u => u.username === username)) {
+        errors.username = "El nombre de usuario ya existe";
     }
     
-    if (password.length < 4) {
-        return { success: false, message: "La contraseña debe tener al menos 4 caracteres" };
+    // Validar email
+    if (!email) {
+        errors.email = "El email es obligatorio";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errors.email = "El email no es válido";
+    } else if (users.find(u => u.email === email)) {
+        errors.email = "El email ya está registrado";
     }
     
-    if (users.find(u => u.email === email)) {
-        return { success: false, message: "El email ya está registrado" };
+    // Validar password
+    if (!password) {
+        errors.password = "La contraseña es obligatoria";
+    } else if (password.length < 4) {
+        errors.password = "La contraseña debe tener al menos 4 caracteres";
     }
     
-    if (users.find(u => u.username === username)) {
-        return { success: false, message: "El nombre de usuario ya existe" };
+    // Si hay errores, retornarlos
+    if (Object.keys(errors).length > 0) {
+        return { success: false, errors };
     }
     
+    // Crear nuevo usuario
     const newUser = {
         id: Math.max(...users.map(u => u.id)) + 1,
         username,
@@ -194,7 +208,7 @@ function register(username, email, password) {
     users.push(newUser);
     saveUsers(users);
     
-    
+    // Auto-login después del registro
     return login(email, password);
 }
 
