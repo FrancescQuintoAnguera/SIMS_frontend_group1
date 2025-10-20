@@ -1,26 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>Chatbox EzyRide</title>
-  <script src="/src/common/sidebar/scripts/sidebar.js"></script>
-  <script src="../scripts/chat.js"></script>
-  <style src="../styles/chat.css"></style>
-</head>
-<body>
-  <?php
-    $sidebar_path = '/mnt/c/Users/moreno/Desktop/sprint1/frontend/SIMS_frontend_group1/src/common/sidebar/templates/sidebar.php';
-    if (file_exists($sidebar_path)) {
-      include $sidebar_path;
-    } else {
-      echo '<my-sidebar></my-sidebar>';
-    }
-  ?>
+  <link rel="stylesheet" href="/common/modules/chat/styles/chat.css">
 
   <div class="container">
     <div class="chat-sidebar">
-      <button onclick="openSidebar()">☰</button>
-      <h2>Historial de casos</h2>
       <div class="case">Caso #101 - Pendiente</div>
       <div class="case">Caso #102 - En progreso</div>
       <div class="case">Caso #103 - Resuelto</div>
@@ -41,7 +22,4 @@
       </div>
     </div>
   </div>
-
-
-</body>
-</html>
+<script src="/common/modules/chat/scripts/chat.js"></script>
