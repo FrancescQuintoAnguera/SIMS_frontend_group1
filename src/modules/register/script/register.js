@@ -1,5 +1,9 @@
-setTimeout(() => {
-    const registerForm = document.querySelector('.register-container form');
+(async () => {
+    // Import dinámico
+    const { register } = await import('/auth/auth.js');
+    
+    setTimeout(() => {
+        const registerForm = document.querySelector('.register-container form');
     
     function clearErrors() {
         document.getElementById('username-error').textContent = '';
@@ -20,7 +24,7 @@ setTimeout(() => {
     }
     
     if (registerForm) {
-        registerForm.addEventListener('submit', (e) => {
+        registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             clearErrors();
@@ -37,7 +41,7 @@ setTimeout(() => {
             }
             
 
-            const result = window.auth.register(username, email, password);
+            const result = await register(username, email, password);
             
             if (result.success) {
  
@@ -56,10 +60,11 @@ setTimeout(() => {
                 if (result.errors.password) {
                     showError('password', result.errors.password);
                 }
-                
+
             } else {
                 alert(result.message);
             }
         });
     }
-}, 0);
+    }, 0);
+})();
