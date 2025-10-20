@@ -1,4 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
+(function initMap() {
+  console.log('[MAP_VIEW.JS] Iniciando mapa...');
+  
   const cars = (window.CARS && Array.isArray(window.CARS)) 
     ? window.CARS 
     : [
@@ -8,9 +10,28 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 4, lat: 40.707802, lng: 0.576544 },
         { id: 5, lat: 40.706129, lng: 0.578527 }
       ];
+  
+  console.log('[MAP_VIEW.JS] Coches:', cars);
+  
+  const mapDiv = document.getElementById('map');
+  console.log('[MAP_VIEW.JS] Div del mapa encontrado:', mapDiv);
+  
+  if (!mapDiv) {
+    console.error('[MAP_VIEW.JS] ERROR: No se encontró el div #map');
+    return;
+  }
+  
+  console.log('[MAP_VIEW.JS] Dimensiones del div:', {
+    width: mapDiv.offsetWidth,
+    height: mapDiv.offsetHeight,
+    display: window.getComputedStyle(mapDiv).display
+  });
 
   const osmUrl = window.OSM_TILE_URL || 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  console.log('[MAP_VIEW.JS] Creando mapa Leaflet...');
+  
   const map = L.map('map').setView([cars[0].lat, cars[0].lng], 13);
+  console.log('[MAP_VIEW.JS] Mapa Leaflet creado:', map);
 
   L.tileLayer(osmUrl, {
     maxZoom: 19,
@@ -122,4 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
       map.locate({ setView: true, maxZoom: 16 });
     }
   })();
-});
+  
+  console.log('[MAP_VIEW.JS] Mapa inicializado correctamente');
+})();
