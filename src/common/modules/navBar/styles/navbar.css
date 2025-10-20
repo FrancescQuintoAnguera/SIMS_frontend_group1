@@ -49,3 +49,37 @@ header button:active {
     width: 24px;
     height: 24px;
 }
+
+/* Username display */
+.username-display {
+    margin: 2dvh;
+    padding: 1.5dvh;
+    color: white;
+    font-size: medium;
+    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+/* Register button */
+#register-button {
+    margin: 2dvh;
+    padding: 1.5dvh;
+    background-color: #A6EE36;
+    border: 0;
+    border-radius: 5px;
+    font-size: medium;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+#register-button:hover {
+    transform: scale(1.05);
+    background-color: #95dd25;
+}
+
+#register-button:active {
+    transform: scale(0.98);
+}

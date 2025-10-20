@@ -2,10 +2,11 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Credentials: true');
 
-session_start();
+// NO usar session_start() - usamos solo cookies y archivos JSON
 
 define('COOKIE_NAME', 'authToken');
 define('COOKIE_EXPIRY', 12 * 60 * 60); 
+define('SESSIONS_FILE', __DIR__ . '/../data/sessions.json');
 
 function getUsers() {
     $usersFile = __DIR__ . '/../data/users.json';
@@ -30,41 +31,93 @@ function getUsers() {
     return json_decode(file_get_contents($usersFile), true);
 }
 
-// Función para guardar usuarios
 function saveUsers($users) {
     $usersFile = __DIR__ . '/../data/users.json';
     file_put_contents($usersFile, json_encode($users, JSON_PRETTY_PRINT));
 }
 
-// Función para generar token
+// Función para leer sesiones del archivo
+function getSessions() {
+    if (!file_exists(SESSIONS_FILE)) {
+        return [];
+    }
+    
+    $content = file_get_contents(SESSIONS_FILE);
+    return json_decode($content, true) ?? [];
+}
+
+// Función para guardar sesiones en archivo
+function saveSessions($sessions) {
+    if (!is_dir(dirname(SESSIONS_FILE))) {
+        mkdir(dirname(SESSIONS_FILE), 0777, true);
+    }
+    file_put_contents(SESSIONS_FILE, json_encode($sessions, JSON_PRETTY_PRINT));
+}
+
+// Limpiar sesiones expiradas
+function cleanExpiredSessions() {
+    $sessions = getSessions();
+    $now = time();
+    $cleaned = [];
+    
+    foreach ($sessions as $token => $data) {
+        // Mantener solo sesiones no expiradas (12 horas para usuarios, 24 para guest)
+        $expiry = $data['role'] === 1 ? (24 * 60 * 60) : COOKIE_EXPIRY;
+        if (($data['createdAt'] + $expiry) > $now) {
+            $cleaned[$token] = $data;
+        }
+    }
+    
+    if (count($cleaned) !== count($sessions)) {
+        saveSessions($cleaned);
+    }
+    
+    return $cleaned;
+}
+
 function generateToken() {
     return bin2hex(random_bytes(32));
 }
 
-// Función para guardar sesión
+// Función para guardar sesión en archivo
 function saveSession($token, $userData) {
-    $_SESSION['sessions'][$token] = [
+    $sessions = cleanExpiredSessions();
+    
+    $sessions[$token] = [
         'userId' => $userData['id'],
         'username' => $userData['username'],
         'email' => $userData['email'],
         'role' => $userData['role'],
         'createdAt' => time()
     ];
+    
+    saveSessions($sessions);
 }
 
-// Función para obtener sesión actual
+// Función para obtener sesión actual desde archivo
 function getCurrentSession() {
     if (!isset($_COOKIE[COOKIE_NAME])) {
         return null;
     }
     
     $token = $_COOKIE[COOKIE_NAME];
+    $sessions = cleanExpiredSessions();
     
-    if (!isset($_SESSION['sessions'][$token])) {
+    if (!isset($sessions[$token])) {
         return null;
     }
     
-    return $_SESSION['sessions'][$token];
+    return $sessions[$token];
+}
+
+// Función para eliminar una sesión
+function deleteSession($token) {
+    $sessions = getSessions();
+    
+    if (isset($sessions[$token])) {
+        unset($sessions[$token]);
+        saveSessions($sessions);
+    }
 }
 
 // Obtener la acción
@@ -202,8 +255,8 @@ switch ($action) {
     case 'logout':
         $token = $_COOKIE[COOKIE_NAME] ?? null;
         
-        if ($token && isset($_SESSION['sessions'][$token])) {
-            unset($_SESSION['sessions'][$token]);
+        if ($token) {
+            deleteSession($token);
         }
         
         setcookie(COOKIE_NAME, '', [

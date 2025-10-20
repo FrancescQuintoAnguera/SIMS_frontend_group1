@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/common/modules/navBar/styles/navbar.css">
     <link rel="stylesheet" href="/common/modules/footer/styles/footer.css">
     
-    <script src="/common/modules/sidebar/scripts/sidebar.js"></script>
+    <script type="module" src="/common/modules/sidebar/scripts/sidebar.js"></script>
     
 </head>
 <body>
@@ -26,6 +26,7 @@
 
     <script type="module" src="/auth/auth.js"></script>
     <script type="module" src="/router/router.js"></script>
+    <script type="module" src="/common/modules/navBar/scripts/navbar.js"></script>
     <script type="module" src="/common/scripts/main.js"></script>
 </body>
 </html>

@@ -34,6 +34,7 @@ export async function loginAsGuest() {
         
         const data = await response.json();
         return data;
+
     } catch (error) {
         console.error('Error en loginAsGuest:', error);
         return { success: false, message: 'Error de conexión' };
@@ -49,10 +50,9 @@ export async function logout() {
         
         const data = await response.json();
         localStorage.removeItem('userSession');
-        console.log("👋 Logout exitoso - Cookie y sesión eliminadas");
         return data;
+
     } catch (error) {
-        console.error('Error en logout:', error);
         return { success: false, message: 'Error de conexión' };
     }
 }
@@ -117,6 +117,7 @@ export async function getCurrentUser() {
         
         const data = await response.json();
         return data.success ? data.user : null;
+        
     } catch (error) {
         console.error('Error en getCurrentUser:', error);
         return null;
