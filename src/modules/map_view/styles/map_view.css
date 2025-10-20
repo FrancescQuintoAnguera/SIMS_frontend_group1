@@ -20,16 +20,11 @@ body, html {
   cursor: pointer;
 }
 .car-marker::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 10px solid #2a9d8f; /* punta */
+  /* Removed the triangular "tip" under the marker to avoid the colored
+     pointer (previously rendered as a small triangle). Keeping the pseudo
+     element suppressed in case some layouts rely on it; change to
+     `display: block` + color rules if needed later. */
+  display: none;
 }
 .car-marker svg { display: block; }
 .car-marker svg path { transition: fill .12s ease, transform .12s ease; }

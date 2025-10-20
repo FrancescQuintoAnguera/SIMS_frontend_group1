@@ -1,10 +1,12 @@
 // map_view.js — Selección de coches + botón "Yo" mejorado
 document.addEventListener('DOMContentLoaded', () => {
-  // Datos de coches — preferimos los inyectados por el servidor (window.CARS)
+  // Datos de coches 
   const cars = (window.CARS && Array.isArray(window.CARS)) ? window.CARS : [
     { id: 1, lat: 40.709100, lng: 0.582300 },
     { id: 2, lat: 40.709795, lng: 0.576714 },
-    { id: 3, lat: 40.705097, lng: 0.576183 }
+    { id: 3, lat: 40.705097, lng: 0.576183 },
+    { id: 4, lat: 40.707802, lng: 0.576544 },
+    { id: 5, lat: 40.706129, lng: 0.578527 }
   ];
 
   // Inicializar mapa centrado en el primer coche
@@ -35,6 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   cars.forEach(car => {
     const marker = L.marker([car.lat, car.lng], { icon: createCarIcon(car.id) }).addTo(markersLayer);
+    // Bind popup showing the car id
+    marker.bindPopup('ID: ' + car.id);
     markerById.set(car.id, marker);
 
     // Click en marcador
@@ -63,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Botón "Yo" mejorado
+  // Botón yo
   const locateControl = L.control({ position: 'topleft' });
   locateControl.onAdd = () => {
     const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-locate');
