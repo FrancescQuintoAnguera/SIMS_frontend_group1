@@ -1,0 +1,104 @@
+@import url("/common/style/common.css");
+
+/* ===== GENERAL ===== */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #0D2136;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: #3B3F48;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1dvh 2dvh;
+}
+
+header img {
+  height: 3dvh;
+}
+
+.botones-header {
+  display: flex;
+  gap: 1dvh;
+}
+
+button {
+  padding: 1dvh 2dvh;
+  background-color: #A6EE36;
+  border: 0;
+  border-radius: 5px;
+  font-size: medium;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background-color: #95dd25;
+}
+
+/* ===== TABLERO ===== */
+main.tablero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5dvh;
+  flex: 1;
+  padding: 2dvh;
+  background-color: #0D2136;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.columna {
+  background-color: #1D3854;
+  border-radius: 10px;
+  padding: 1dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 200px;
+}
+
+.columna h2 {
+  color: #69B7F0;
+  font-size: 1.2rem;
+  margin-bottom: 1dvh;
+}
+
+.contenedor-tareas {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8dvh;
+  width: 100%;
+  min-height: 80px;
+}
+
+.tarea {
+  background-color: #2E4A68;
+  color: white;
+  padding: 1dvh;
+  border-radius: 8px;
+  text-align: center;
+  cursor: grab;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.tarea:active {
+  cursor: grabbing;
+  transform: scale(1.05);
+}
+
+.columna.drag-over {
+  outline: 2px dashed #A6EE36;
+}
+
+.tarea:hover {
+  background-color: #3A5B7F;
+}
