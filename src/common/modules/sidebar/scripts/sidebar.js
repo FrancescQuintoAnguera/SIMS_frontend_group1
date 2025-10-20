@@ -17,7 +17,7 @@ class MySidebar extends HTMLElement {
           inset: 0;
           background: rgba(0, 0, 0, 0.4);
           display: none;
-          z-index: 998;
+          z-index: 100;
         }
 
         .overlay.visible {
@@ -33,8 +33,8 @@ class MySidebar extends HTMLElement {
           background-color: #111827;
           transform: translateX(-100%);
           transition: transform 0.3s ease;
-          z-index: 999;
           display: flex;
+          z-index: 200;
           flex-direction: column;
           justify-content: space-between;
         }
@@ -43,9 +43,6 @@ class MySidebar extends HTMLElement {
           transform: translateX(0);
         }
 
-<<<<<<< HEAD:src/common/sidebar/scripts/sidebar.js
-        /* Header */
-=======
         .close-button {
           position: absolute;
           top: 1vh;
@@ -59,7 +56,6 @@ class MySidebar extends HTMLElement {
           padding: 0.25rem;
         }
 
->>>>>>> develop:src/common/modules/sidebar/scripts/sidebar.js
         .header {
           background-color: #1f2937;
           padding: 1.5vh 1rem;
@@ -141,25 +137,16 @@ class MySidebar extends HTMLElement {
 
         .menu-text-main {
           font-weight: 600;
-<<<<<<< HEAD:src/common/sidebar/scripts/sidebar.js
-          font-size: clamp(0.875rem, 1.8vw, 1.5rem);
-=======
           font-size: clamp(0.875rem, 3.5vw, 1rem);
->>>>>>> develop:src/common/modules/sidebar/scripts/sidebar.js
           line-height: 1.2;
         }
 
         .menu-text-sub {
-<<<<<<< HEAD:src/common/sidebar/scripts/sidebar.js
-          font-size: clamp(0.75rem, 1.5vw, 1.25rem);
-=======
           font-size: clamp(0.7rem, 3vw, 0.825rem);
->>>>>>> develop:src/common/modules/sidebar/scripts/sidebar.js
           color: #9ca3af;
           line-height: 1.2;
         }
 
-        /* Footer */
         .footer {
           background-color: #1f2937;
           padding: 1.5vh 1rem;
@@ -195,16 +182,7 @@ class MySidebar extends HTMLElement {
           height: clamp(1rem, 1.75vw, 1.5rem);
           border-radius: 0.25rem;
         }
-        .close-button {
-          position: absolute;
-          top: 1vh;
-          right: 1vw;
-          background: none;
-          border: none;
-          color: white;
-          font-size: 2rem;
-          cursor: pointer;
-        }
+
         .search-input-container {
           padding: 1vh 1rem;
           display: none;

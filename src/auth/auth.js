@@ -1,5 +1,3 @@
-// General functions
-
 function generateToken() {
     return 'token_' + Math.random().toString(36).substr(2) + Date.now().toString(36);
 }
@@ -26,8 +24,12 @@ function deleteCookie(name) {
     document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
 }
 
+const REGEX = {
+    EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    USERNAME: /^[a-zA-Z0-9_-]{3,20}$/,
+    PASSWORD: /^.{4,}$/
+};
 
-//Especific functions
 
 function getUsers() {
     const users = localStorage.getItem('mockUsers');
@@ -166,21 +168,44 @@ function logout() {
 
 function register(username, email, password) {
     const users = getUsers();
-    
-    if (!username || !email || !password) {
-        return { success: false, message: "Todos los campos son obligatorios" };
+    const errors = {};
+
+    if (!username) {
+        errors.username = "Campo vacío";
+    }
+    if (!email) {
+        errors.email = "Campo vacío";
+    }
+    if (!password) {
+        errors.password = "Campo vacío";
     }
     
-    if (password.length < 4) {
-        return { success: false, message: "La contraseña debe tener al menos 4 caracteres" };
+    if (Object.keys(errors).length > 0) {
+        return { success: false, errors };
     }
-    
-    if (users.find(u => u.email === email)) {
-        return { success: false, message: "El email ya está registrado" };
+
+    if (!REGEX.USERNAME.test(username)) {
+        errors.username = "El username debe tener 3-20 caracteres (letras, números, _ -)";
     }
-    
+
     if (users.find(u => u.username === username)) {
-        return { success: false, message: "El nombre de usuario ya existe" };
+        errors.username = "El nombre de usuario ya existe";
+    }
+
+    if (!REGEX.EMAIL.test(email)) {
+        errors.email = "El email no es válido";
+    } 
+
+    if (users.find(u => u.email === email)) {
+        errors.email = "El email ya está registrado";
+    }
+
+    if (!REGEX.PASSWORD.test(password)) {
+        errors.password = "La contraseña debe tener al menos 4 caracteres";
+    }
+
+    if (Object.keys(errors).length > 0) {
+        return { success: false, errors };
     }
     
     const newUser = {
@@ -193,7 +218,6 @@ function register(username, email, password) {
     
     users.push(newUser);
     saveUsers(users);
-    
     
     return login(email, password);
 }
@@ -209,8 +233,6 @@ window.auth = {
     setCookie,
     deleteCookie
 };
-
-// Init users
 
 (function initializeDefaultUsers() {
     const users = localStorage.getItem('mockUsers');
