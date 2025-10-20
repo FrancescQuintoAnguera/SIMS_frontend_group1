@@ -1,6 +1,7 @@
 (async () => {
     // Import dinámico
     const { register } = await import('/auth/auth.js');
+    const { navigateTo } = await import('/router/router.js');
     
     setTimeout(() => {
         const registerForm = document.querySelector('.register-container form');
@@ -45,7 +46,7 @@
             
             if (result.success) {
  
-                window.navigateTo('/home');
+                navigateTo('/home');
 
             } else if (result.errors) {
 

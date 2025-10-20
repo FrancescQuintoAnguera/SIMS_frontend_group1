@@ -1,6 +1,7 @@
 (async () => {
     // Import dinámico
     const { login, loginAsGuest } = await import('/auth/auth.js');
+    const { navigateTo } = await import('/router/router.js');
     
     setTimeout(() => {
         const loginForm = document.querySelector('.login-container form');
@@ -16,7 +17,7 @@
                 const result = await login(identifier, password);
                 
                 if (result.success) {
-                    window.navigateTo('/home');
+                    navigateTo('/home');
                 } else {
                     alert(result.message);
                 }
@@ -27,7 +28,7 @@
             guestButton.addEventListener('click', async () => {
                 const result = await loginAsGuest();
                 if (result.success) {
-                    window.navigateTo('/home');
+                    navigateTo('/home');
                 }
             });
         }
