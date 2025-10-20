@@ -70,6 +70,7 @@ function crearColumna(titulo = "Nueva columna") {
   });
 
   inicializarDragAndDrop();
+  guardarEstado();
 }
 
 // Crear nueva tarea en cualquier columna
@@ -100,7 +101,7 @@ function guardarEstado() {
     estado.push({ titulo, tareas });
   });
 
-  fetch('../template/savestatus.php', {
+  fetch('savestatus.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(estado)
@@ -122,6 +123,7 @@ function cargarEstado(estadoGuardado) {
       }
     });
   });
+  inicializarDragAndDrop();
 }
 
 // Esperar a DOM cargado
@@ -132,7 +134,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Botón nueva tarea añade a la primera columna
   document.getElementById("nuevaTarea").addEventListener("click", () => {
     const primera = document.querySelector(".contenedor-tareas");
-    if (primera) crearTarea(primera);
+    if (primera) {
+      crearTarea(primera);
+    } else {
+      alert("Crea una columna primero para añadir tareas.");
+    }
   });
 
   // Cargar estado desde PHP

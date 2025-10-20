@@ -1,5 +1,3 @@
-@import url("/common/style/common.css");
-
 /* ===== GENERAL ===== */
 body {
   margin: 0;
@@ -13,20 +11,16 @@ body {
 
 header {
   background-color: #3B3F48;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
   padding: 1dvh 2dvh;
 }
 
-header img {
-  height: 3dvh;
-}
-
-.botones-header {
+.botones-acciones {
   display: flex;
   gap: 1dvh;
+  padding: 1dvh 2dvh;
+  background-color: #0D2136;
+  justify-content: flex-start;
 }
 
 button {
@@ -66,10 +60,20 @@ main.tablero {
   min-height: 200px;
 }
 
+.header-columna {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 1dvh;
+  box-sizing: border-box;
+  margin-bottom: 1dvh;
+}
+
 .columna h2 {
   color: #69B7F0;
   font-size: 1.2rem;
-  margin-bottom: 1dvh;
+  margin: 0;
 }
 
 .contenedor-tareas {
