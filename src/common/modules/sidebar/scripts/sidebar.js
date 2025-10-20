@@ -17,7 +17,7 @@ class MySidebar extends HTMLElement {
           inset: 0;
           background: rgba(0, 0, 0, 0.4);
           display: none;
-          z-index: 998;
+          z-index: 100;
         }
 
         .overlay.visible {

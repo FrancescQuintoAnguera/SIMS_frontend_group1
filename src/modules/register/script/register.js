@@ -1,7 +1,6 @@
 setTimeout(() => {
     const registerForm = document.querySelector('.register-container form');
     
-    // Función para limpiar todos los mensajes de error
     function clearErrors() {
         document.getElementById('username-error').textContent = '';
         document.getElementById('email-error').textContent = '';
@@ -9,7 +8,6 @@ setTimeout(() => {
         document.getElementById('repassword-error').textContent = '';
     }
     
-    // Función para mostrar un error en un campo específico
     function showError(fieldId, message) {
         const errorElement = document.getElementById(fieldId + '-error');
         if (errorElement) {
@@ -44,16 +42,21 @@ setTimeout(() => {
             if (result.success) {
  
                 window.navigateTo('/home');
+
             } else if (result.errors) {
+
                 if (result.errors.username) {
                     showError('username', result.errors.username);
                 }
+
                 if (result.errors.email) {
                     showError('email', result.errors.email);
                 }
+
                 if (result.errors.password) {
                     showError('password', result.errors.password);
                 }
+                
             } else {
                 alert(result.message);
             }

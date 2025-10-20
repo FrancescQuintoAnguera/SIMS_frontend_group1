@@ -1,5 +1,3 @@
-// General functions
-
 function generateToken() {
     return 'token_' + Math.random().toString(36).substr(2) + Date.now().toString(36);
 }
@@ -26,8 +24,12 @@ function deleteCookie(name) {
     document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
 }
 
+const REGEX = {
+    EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    USERNAME: /^[a-zA-Z0-9_-]{3,20}$/,
+    PASSWORD: /^.{4,}$/
+};
 
-//Especific functions
 
 function getUsers() {
     const users = localStorage.getItem('mockUsers');
@@ -167,36 +169,45 @@ function logout() {
 function register(username, email, password) {
     const users = getUsers();
     const errors = {};
-    
-    // Validar username
+
     if (!username) {
-        errors.username = "El nombre de usuario es obligatorio";
-    } else if (users.find(u => u.username === username)) {
+        errors.username = "Campo vacío";
+    }
+    if (!email) {
+        errors.email = "Campo vacío";
+    }
+    if (!password) {
+        errors.password = "Campo vacío";
+    }
+    
+    if (Object.keys(errors).length > 0) {
+        return { success: false, errors };
+    }
+
+    if (!REGEX.USERNAME.test(username)) {
+        errors.username = "El username debe tener 3-20 caracteres (letras, números, _ -)";
+    }
+
+    if (users.find(u => u.username === username)) {
         errors.username = "El nombre de usuario ya existe";
     }
-    
-    // Validar email
-    if (!email) {
-        errors.email = "El email es obligatorio";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+    if (!REGEX.EMAIL.test(email)) {
         errors.email = "El email no es válido";
-    } else if (users.find(u => u.email === email)) {
+    } 
+
+    if (users.find(u => u.email === email)) {
         errors.email = "El email ya está registrado";
     }
-    
-    // Validar password
-    if (!password) {
-        errors.password = "La contraseña es obligatoria";
-    } else if (password.length < 4) {
+
+    if (!REGEX.PASSWORD.test(password)) {
         errors.password = "La contraseña debe tener al menos 4 caracteres";
     }
-    
-    // Si hay errores, retornarlos
+
     if (Object.keys(errors).length > 0) {
         return { success: false, errors };
     }
     
-    // Crear nuevo usuario
     const newUser = {
         id: Math.max(...users.map(u => u.id)) + 1,
         username,
@@ -208,7 +219,6 @@ function register(username, email, password) {
     users.push(newUser);
     saveUsers(users);
     
-    // Auto-login después del registro
     return login(email, password);
 }
 
@@ -223,8 +233,6 @@ window.auth = {
     setCookie,
     deleteCookie
 };
-
-// Init users
 
 (function initializeDefaultUsers() {
     const users = localStorage.getItem('mockUsers');
