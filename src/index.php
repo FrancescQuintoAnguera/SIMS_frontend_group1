@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="/common/modules/navBar/styles/navbar.css">
     <link rel="stylesheet" href="/common/modules/footer/styles/footer.css">
     
-    <!-- Cargar el Web Component ANTES de usarlo -->
     <script src="/common/modules/sidebar/scripts/sidebar.js"></script>
+    
 </head>
 <body>
     <header>
@@ -22,8 +22,10 @@
     <footer>
         <?php include_once __DIR__ . '/common/modules/footer/template/footer.php';?>
     </footer>
-    <script src="/auth/auth.js"></script>
-    <script src="/router/router.js"></script>
-    <script src="/common/scripts/main.js"></script>
+
+
+    <script type="module" src="/auth/auth.js"></script>
+    <script type="module" src="/router/router.js"></script>
+    <script type="module" src="/common/scripts/main.js"></script>
 </body>
 </html>
