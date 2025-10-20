@@ -1,4 +1,3 @@
-/* Ocupa toda la pantalla */
 body, html {
   margin: 0;
   padding: 0;
@@ -10,8 +9,7 @@ body, html {
   width: 100%;
 }
 
-/* Marcador tipo gota: fondo verde con círculo azul dentro (sin imagen)
-   Usamos ::before para crear la punta inferior. */
+
 .car-marker {
   width: 30px;
   height: 42px;
@@ -20,24 +18,18 @@ body, html {
   cursor: pointer;
 }
 .car-marker::after {
-  /* Removed the triangular "tip" under the marker to avoid the colored
-     pointer (previously rendered as a small triangle). Keeping the pseudo
-     element suppressed in case some layouts rely on it; change to
-     `display: block` + color rules if needed later. */
+
   display: none;
 }
 .car-marker svg { display: block; }
 .car-marker svg path { transition: fill .12s ease, transform .12s ease; }
 .car-marker svg circle { transition: fill .12s ease, transform .12s ease; }
 
-/* Visual adjustments for the SVG marker. The SVG uses `stroke="currentColor"`
-  so you can change the stroke color by setting `color` on the container
-  (.car-marker). This is convenient to switch colors when selected. */
+
 .car-marker { line-height: 0; }
 .car-marker svg { filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35)); }
 
-/* Popup styling */
-/* (Popups/controls from previous iterations are left here for reference.) */
+
 .car-popup { font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
 .car-popup .rent-btn {
   margin-top: 6px;
@@ -50,19 +42,16 @@ body, html {
 }
 .car-popup .rent-btn:disabled { opacity: 0.7; cursor: default; }
 
-/* Simple responsive tweaks */
 @media (max-width: 480px) {
   .car-popup { font-size: 13px; }
 }
 
-/* Estado seleccionado para el marcador */
 .car-marker.selected svg { transform: scale(1.07); }
-/* When selected we change the container's color which updates the SVG stroke
-  because the SVG uses `stroke="currentColor"`. Adjust colors to taste. */
+
 .car-marker.selected svg { color: #1f78a6; }
 .car-marker svg { color: #2a9d8f; }
 
-/* Botón "Yo" estilizado */
+
 .leaflet-control-locate a {
   display: flex;
   align-items: center;
