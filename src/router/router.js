@@ -1,12 +1,16 @@
+// TODO: Refactor all the routes is needed an array of objects
+
 const routes = {
     "/login": "/modules/login/template/login.php",
-    "/chatbot": "/modules/chatbox/template/chatbox.php",
-    "/home": "/modules/home/template/home.php"
+    "/home": "/modules/home/template/home.php",
+    "/register": "/modules/register/template/register.php",
+    "/chat": "/common/modules/chat/templates/chat.php",
+    "/kanban": "/modules/kanban/templates/kanban.php"
 }
 
-async function navigateTo(urlPath) {
+export async function navigateTo(urlPath) {
 
-    // TODO: Hay que poner por cookies
+    // TODO: We need to apply the cookies 
 
     if (urlPath === "/" || urlPath === "") {
         urlPath = "/login";
@@ -14,7 +18,7 @@ async function navigateTo(urlPath) {
     
     const route = routes[urlPath];
     
-    //TODO: Hay que hacer un template del 404 
+    //TODO: We need to make an a 404 page
 
     if (!route) {
         document.getElementById("app").innerHTML = `
@@ -37,7 +41,6 @@ async function navigateTo(urlPath) {
         const appContainer = document.getElementById("app");
         appContainer.innerHTML = html;
         
-        // IMPORTANTE: Ejecutar scripts insertados dinámicamente
         executeScripts(appContainer);
         
         history.pushState({}, "", urlPath);
@@ -45,14 +48,14 @@ async function navigateTo(urlPath) {
         console.error('Error cargando la página:', error);
         document.getElementById("app").innerHTML = `
             <div style="padding: 20px; text-align: center;">
-                <h1>Error al cargar la página</h1>
+                <h1>Error al cargar el documento</h1>
                 <p>${error.message}</p>
             </div>
         `;
     }
 }
 
-function executeScripts(container) {
+export function executeScripts(container) {
     const scripts = container.querySelectorAll('script');
     
     scripts.forEach((oldScript) => {
@@ -74,8 +77,7 @@ function executeScripts(container) {
     });
 }
 
-window.navigateTo = navigateTo;
-
+// Event listeners para navegación
 document.addEventListener("click", (e) => {
     const link = e.target.closest("a");
     if(link && link.href.startsWith(window.location.origin)){
@@ -90,4 +92,4 @@ window.addEventListener("popstate", () => {
 
 window.addEventListener("DOMContentLoaded", () => {
     navigateTo(window.location.pathname);
-})
+});

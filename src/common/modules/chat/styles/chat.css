@@ -1,0 +1,132 @@
+:root{
+    --header-height: 8vh;
+    --footer-height: 6vh;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    height: 100%;
+}
+
+.chat-sidebar {
+    width: 33%;
+    height: 100%;
+    max-width: 420px;
+    min-width: 240px;
+    background: #445a72;
+    padding: 2vh 2vw;
+    overflow-y: auto;
+}
+
+.chat-sidebar h2 {
+    margin-top: 0;
+    font-size: 2vh;
+}
+
+.case {
+    background: #cdff7c;
+    margin-bottom: 1vh;
+    padding: 1vh 1vw;
+    border-radius: 0.6vh;
+    cursor: pointer;
+    font-size: 1.5vh;
+    color: black;
+}
+
+.case:hover {
+    background: #a1ff0a;
+}
+
+.chatbox {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 2vh 2vw;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #445a72;
+}
+
+.chat-window {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 0.6vh;
+    padding: 1vh 1vw;
+    overflow-y: auto;
+    background: #ffffff;
+    margin-bottom: 1vh;
+    color: black;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vh;
+}
+
+.chat-message {
+    margin: 0; 
+    padding: 0.8vh 1vw;
+    border-radius: 1vh;
+    display: inline-block;
+    width: fit-content; 
+    max-width: 70%;
+    word-break: break-word;
+    font-size: 1.6vh;
+}
+
+.user {
+    background: #A6EE36;
+    color: black;
+    align-self: flex-end; 
+    margin-left: auto;
+}
+
+.agent {
+    background: #03A0FF;
+    color: white;
+    align-self: flex-start; 
+    margin-right: auto;
+}
+
+.chat-input {
+    display: flex;
+    flex: 0 0 auto;
+    position: relative;
+    z-index: 2;
+    background: transparent;
+}
+
+.chat-input input {
+    background: white;
+    flex: 1;
+    padding: 1vh 1vw;
+    border-radius: 0.6vh;
+    margin-right: 0.5vw;
+    font-size: 1.6vh;
+    color: black;
+}
+
+.chat-input button {
+    padding: 1vh 2vw;
+    border-radius: 0.6vh;
+    border: none;
+    background: #A6EE36;
+    color: white;
+    cursor: pointer;
+    font-size: 1.6vh;
+}
+
+.chat-input button:hover {
+    background: #415e0eff;
+}
+
+.chat-input input::placeholder {
+    color: #000;
+    opacity: 1; 
+}
+
+.size-6 {
+    width: 24px;
+    height: 24px;
+}

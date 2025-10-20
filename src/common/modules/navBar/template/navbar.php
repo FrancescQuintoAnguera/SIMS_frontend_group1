@@ -1,3 +1,7 @@
+<?php
+$isAuthenticated = isset($_COOKIE['authToken']) && !empty($_COOKIE['authToken']);
+?>
+
 <header>
     <button id="menu-toggle" class="menu-button" aria-label="Abrir menú">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
@@ -7,9 +11,14 @@
 
     <img src="/common/images/logoName.png" alt="logo">
 
-    <!--TODO: Hay que hacer una funcion para enrutar a register/login en caso de -->
-    <button>
-        Registrate
-    </button>
+    <?php if ($isAuthenticated): ?>
+        <span class="username-display" id="username-display">
+            Cargando...
+        </span>
+    <?php else: ?>
+        <button id="register-button">
+            Regístrate
+        </button>
+    <?php endif; ?>
 
 </header>
