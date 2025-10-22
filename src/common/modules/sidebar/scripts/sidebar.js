@@ -9,8 +9,7 @@ class MySidebar extends HTMLElement {
     container.innerHTML = `
       <style>
         :host {
-          font-family: 'Poppins', sans-serif;
-          display: block;
+          font-family: 'Poppins';
         }
 
         .overlay {
@@ -18,7 +17,7 @@ class MySidebar extends HTMLElement {
           inset: 0;
           background: rgba(0, 0, 0, 0.4);
           display: none;
-          z-index: 998;
+          z-index: 100;
         }
 
         .overlay.visible {
@@ -34,8 +33,8 @@ class MySidebar extends HTMLElement {
           background-color: #111827;
           transform: translateX(-100%);
           transition: transform 0.3s ease;
-          z-index: 999;
           display: flex;
+          z-index: 200;
           flex-direction: column;
           justify-content: space-between;
         }
@@ -70,13 +69,14 @@ class MySidebar extends HTMLElement {
         }
 
         .header .logo-ezy {
-          color: #A6EE36;
+          color: white;
         }
 
         .header .logo-ride {
           color: #60a5fa;
         }
 
+        /* Menú */
         .menu {
           display: flex;
           flex-direction: column;
@@ -191,7 +191,6 @@ class MySidebar extends HTMLElement {
         .search-input-container.visible {
           display: block;
         }
-
         .search-input {
           width: 100%;
           padding: 1vh 1rem;
@@ -219,7 +218,7 @@ class MySidebar extends HTMLElement {
         </div>
 
         <div class="menu">
-          <button class="menu-button" data-action="mapa">
+          <button class="menu-button" data-action="home" data-route="/home">
             <div class="menu-icon bg-lime">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 16.382V5.618a1 1 0 00-1.447-.894L15 7m-6 0l6-3"/>
@@ -256,7 +255,7 @@ class MySidebar extends HTMLElement {
             </div>
           </button>
 
-          <button class="menu-button" data-action="atencion" onclick="window.location.href='/chatbox'">
+          <button class="menu-button" data-action="chat" data-route="/chat">
             <div class="menu-icon">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
@@ -267,9 +266,20 @@ class MySidebar extends HTMLElement {
               <div class="menu-text-sub">al cliente</div>
             </div>
           </button>
+
+          <button class="menu-button" data-action="kanban" data-route="/kanban">
+            <div class="menu-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              </svg>
+            </div>
+            <div class="menu-text">
+              <div class="menu-text-main">Kanban</div>
+            </div>
+          </button>
         </div>
 
-        <div class="footer">
+        <div class="footer"
           <button class="footer-button" data-action="settings">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
@@ -296,9 +306,16 @@ class MySidebar extends HTMLElement {
 
     const buttons = this.shadowRoot.querySelectorAll(".menu-button");
     buttons.forEach((btn) => {
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", async () => {
         const action = btn.getAttribute("data-action");
-        if (action === "buscar") {
+        const route = btn.getAttribute("data-route");
+        
+        if (route) {
+          // Importar navigateTo dinámicamente y navegar
+          const { navigateTo } = await import('/router/router.js');
+          navigateTo(route);
+          this.cerrar(sidebar, overlay);
+        } else if (action === "buscar") {
           searchInputContainer.classList.toggle("visible");
         } else if (action) {
           document.dispatchEvent(

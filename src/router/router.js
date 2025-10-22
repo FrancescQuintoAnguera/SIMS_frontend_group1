@@ -2,10 +2,13 @@
 
 const routes = {
     "/login": "/modules/login/template/login.php",
-    "/home": "/modules/home/template/home.php"
+    "/home": "/modules/home/template/home.php",
+    "/register": "/modules/register/template/register.php",
+    "/chat": "/common/modules/chat/templates/chat.php",
+    "/kanban": "/modules/kanban/templates/kanban.php"
 }
 
-async function navigateTo(urlPath) {
+export async function navigateTo(urlPath) {
 
     // TODO: We need to apply the cookies 
 
@@ -52,7 +55,7 @@ async function navigateTo(urlPath) {
     }
 }
 
-function executeScripts(container) {
+export function executeScripts(container) {
     const scripts = container.querySelectorAll('script');
     
     scripts.forEach((oldScript) => {
@@ -74,8 +77,7 @@ function executeScripts(container) {
     });
 }
 
-window.navigateTo = navigateTo;
-
+// Event listeners para navegación
 document.addEventListener("click", (e) => {
     const link = e.target.closest("a");
     if(link && link.href.startsWith(window.location.origin)){
@@ -90,4 +92,4 @@ window.addEventListener("popstate", () => {
 
 window.addEventListener("DOMContentLoaded", () => {
     navigateTo(window.location.pathname);
-})
+});
