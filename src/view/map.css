@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.map-container {
+    height: 100%;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    border: none;
+}
+.marker-circle-custom {
+    width: 40px; 
+    height: 40px;
+    border-radius: 50%;
+    background-color: #FFFFFF; 
+    border: 3px solid #6c46a6; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.marker-circle-custom img {
+    width: 65%;
+    height: 65%;
+    object-fit: contain;
+}
