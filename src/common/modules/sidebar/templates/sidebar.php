@@ -1,1 +1,0 @@
-<my-sidebar></my-sidebar>
