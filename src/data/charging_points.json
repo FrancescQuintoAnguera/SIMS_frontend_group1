@@ -1,0 +1,37 @@
+[
+    {
+        "id": 102,
+        "name": "Institute",
+        "latitude": 40.709136,
+        "longitude": 0.582554,
+        "status": "inactive"
+    },
+    {
+        "id": 103,
+        "name": "Hola",
+        "latitude": 40.708054,
+        "longitude": 0.580682,
+        "status": "broken"
+    },
+    {
+        "id": 104,
+        "name": "putero",
+        "latitude": 39.594578,
+        "longitude": -2.724609,
+        "status": "inactive"
+    },
+    {
+        "id": 105,
+        "name": "hola",
+        "latitude": 40.160771,
+        "longitude": -0.203247,
+        "status": "inactive"
+    },
+    {
+        "id": 106,
+        "name": "hola",
+        "latitude": 40.160771,
+        "longitude": -0.203247,
+        "status": "inactive"
+    }
+]

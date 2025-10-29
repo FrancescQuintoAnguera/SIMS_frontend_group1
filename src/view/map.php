@@ -11,10 +11,9 @@ $chargingPoints = $chargingPoints ?? [];
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-    <link rel="stylesheet" href="map.css"> 
+    <link rel="stylesheet" href="view/map.css"> 
 </head>
 <body>
-
     <div class="map-container" id="leafletMap">
     </div>
 
@@ -22,6 +21,6 @@ $chargingPoints = $chargingPoints ?? [];
         const chargingPoints = <?php echo json_encode($chargingPoints); ?>;
     </script>
     
-    <script src="map_render.js" defer></script> 
+    <script src="view/map_render.js" defer></script> 
 </body>
 </html>
