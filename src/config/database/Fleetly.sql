@@ -1,7 +1,7 @@
 -- Crear tipo ENUM para status_car
 CREATE TYPE vehicle_status AS ENUM ('available', 'disabled', 'maintenance');
 
-CREATE TABLE "Tenants" (
+CREATE TABLE "tenants" (
   "id" SERIAL PRIMARY KEY,
   "legal_name" varchar(50) NOT NULL,
   "cif" varchar(9) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE "Tenants" (
   "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
-CREATE TABLE "Users" (
+CREATE TABLE "users" (
   "id" SERIAL PRIMARY KEY,
   "id_tenan" int NOT NULL,
   "name" varchar(30) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE "Users" (
   "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
-CREATE TABLE "Roles" (
+CREATE TABLE "roles" (
   "id" SERIAL PRIMARY KEY,
   "name" varchar(40) NOT NULL,
   "description" text NOT NULL,
@@ -35,13 +35,13 @@ CREATE TABLE "Roles" (
   "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
-CREATE TABLE "RolePermissions" (
+CREATE TABLE "role_permissions" (
   "id_role" int NOT NULL,
   "id_permission" int NOT NULL,
   PRIMARY KEY ("id_role", "id_permission")
 );
 
-CREATE TABLE "Permissions" (
+CREATE TABLE "permissions" (
   "id" SERIAL PRIMARY KEY,
   "name" varchar(100) NOT NULL,
   "description" text NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE "Permissions" (
   "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
-CREATE TABLE "Vehicles" (
+CREATE TABLE "vehicles" (
   "id" SERIAL PRIMARY KEY,
   "id_tenan" int NOT NULL,
   "name" varchar(100) NOT NULL,
@@ -62,13 +62,13 @@ CREATE TABLE "Vehicles" (
   "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
-CREATE TABLE "Types_vehicles" (
+CREATE TABLE "types_vehicles" (
   "id" SERIAL PRIMARY KEY,
   "name" varchar(50) NOT NULL,
   "description" text
 );
 
-CREATE TABLE "Routes" (
+CREATE TABLE "routes" (
   "id" SERIAL PRIMARY KEY,
   "id_user" int NOT NULL,
   "id_vehicle" int NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE "Routes" (
   "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
-CREATE TABLE "Tickets" (
+CREATE TABLE "tickets" (
   "id" SERIAL PRIMARY KEY,
   "id_tenan" int NOT NULL,
   "id_requester" int NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE "Tickets" (
   "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
-CREATE TABLE "Status" (
+CREATE TABLE "status" (
   "id" SERIAL PRIMARY KEY,
   "name" varchar(30) NOT NULL
 );
