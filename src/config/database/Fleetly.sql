@@ -1,95 +1,99 @@
+-- Crear tipo ENUM para status_car
+CREATE TYPE vehicle_status AS ENUM ('available', 'disabled', 'maintenance');
+
 CREATE TABLE "Tenants" (
-  "id" int PRIMARY KEY NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "legal_name" varchar(50) NOT NULL,
   "cif" varchar(9) NOT NULL,
   "number" varchar(15),
   "addres" varchar(80),
-  "created_at" datetime NOT NULL,
-  "updated_at" datetime DEFAULT null,
-  "deleted_at" datetime DEFAULT null
+  "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updated_at" TIMESTAMP DEFAULT NULL,
+  "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE "Users" (
-  "id" int PRIMARY KEY NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "id_tenan" int NOT NULL,
-  "name" varhcar(30) NOT NULL,
+  "name" varchar(30) NOT NULL,
   "surname" varchar(50),
   "dni" varchar(9) NOT NULL,
   "email" varchar(50) NOT NULL,
   "password" varchar(256) NOT NULL,
   "id_role" int NOT NULL,
-  "created_at" datetime NOT NULL,
-  "updated_at" datetime DEFAULT null,
-  "deleted_at" datetime DEFAULT null
+  "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updated_at" TIMESTAMP DEFAULT NULL,
+  "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE "Roles" (
-  "id" int PRIMARY KEY NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar(40) NOT NULL,
   "description" text NOT NULL,
-  "created_at" datetime NOT NULL,
-  "updated_at" datetime DEFAULT null,
-  "deleted_at" datetime DEFAULT null
+  "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updated_at" TIMESTAMP DEFAULT NULL,
+  "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE "RolePermissions" (
   "id_role" int NOT NULL,
-  "id_permission" int NOT NULL
+  "id_permission" int NOT NULL,
+  PRIMARY KEY ("id_role", "id_permission")
 );
 
 CREATE TABLE "Permissions" (
-  "id" int PRIMARY KEY NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar(100) NOT NULL,
   "description" text NOT NULL,
-  "created_at" datetime NOT NULL,
-  "updated_at" datetime DEFAULT null,
-  "deleted_at" datetime DEFAULT null
+  "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updated_at" TIMESTAMP DEFAULT NULL,
+  "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE "Vehicles" (
-  "id" int PRIMARY KEY NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "id_tenan" int NOT NULL,
   "name" varchar(100) NOT NULL,
   "id_type_vehicle" int NOT NULL,
-  "status_car" enum(available,disabled,maintenance),
-  "vehicle_code" varchar NOT NULL,
-  "created_at" datetime NOT NULL,
-  "updated_at" datetime DEFAULT null,
-  "deleted_at" datetime DEFAULT null
+  "status_car" vehicle_status NOT NULL DEFAULT 'available',
+  "vehicle_code" varchar(50) NOT NULL,
+  "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updated_at" TIMESTAMP DEFAULT NULL,
+  "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE "Types_vehicles" (
-  "id" int PRIMARY KEY NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar(50) NOT NULL,
   "description" text
 );
 
 CREATE TABLE "Routes" (
-  "id" int PRIMARY KEY NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "id_user" int NOT NULL,
   "id_vehicle" int NOT NULL,
   "starting_point" float NOT NULL,
   "end_point" float,
-  "created_at" datetime NOT NULL,
-  "updated_at" datetime DEFAULT null,
-  "deleted_at" datetime DEFAULT null
+  "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updated_at" TIMESTAMP DEFAULT NULL,
+  "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE "Tickets" (
-  "id" int PRIMARY KEY NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "id_tenan" int NOT NULL,
   "id_requester" int NOT NULL,
   "id_assigned" int NOT NULL,
   "id_vehicle" int NOT NULL,
   "description" text,
   "id_satus" int NOT NULL,
-  "created_at" datetime NOT NULL,
-  "updated_at" datetime DEFAULT null,
-  "deleted_at" datetime DEFAULT null
+  "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updated_at" TIMESTAMP DEFAULT NULL,
+  "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE "Status" (
-  "id" int PRIMARY KEY NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar(30) NOT NULL
 );
 
