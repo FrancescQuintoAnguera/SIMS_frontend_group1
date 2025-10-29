@@ -1,35 +1,25 @@
 <?php
 
+// Incluir el modelo
+require_once __DIR__ . '/../model/vehiclemodel.php';
+
 class MapController {
+    
+    private $basePath;
+    private $model; // Nueva propiedad para el modelo
 
-    public function __construct() {
-    }
-
-    private function getJsonFilePath() {
-        // La carpeta 'data' está al lado de 'controlers'
-        return __DIR__ . '/../data/charging_points.json';
-    }
-
-    private function readPoints() {
-        $jsonFile = $this->getJsonFilePath();
-        if (file_exists($jsonFile)) {
-            $jsonData = file_get_contents($jsonFile);
-            return json_decode($jsonData, true) ?: []; 
-        }
-        return [];
-    }
-
-    private function writePoints(array $points) {
-        $jsonFile = $this->getJsonFilePath();
-        // Asegúrate de que PHP tiene permisos de escritura en la carpeta 'data/'
-        return file_put_contents($jsonFile, json_encode($points, JSON_PRETTY_PRINT)) !== false; 
+    // El constructor inicializa el modelo
+    public function __construct($basePath = '') {
+        $this->basePath = $basePath;
+        $this->model = new VehicleModel(); // Inicializa la conexión a la DB
     }
 
     // ------------------------------------------------------------------
 
     public function showPublicMap() {
-        $chargingPoints = $this->readPoints();
-        // Carga la vista desde view/map.php
+        // LECTURA DESDE LA BASE DE DATOS
+        $chargingPoints = $this->model->getAllVehicles(); 
+        $base_path = $this->basePath; 
         require __DIR__ . '/../view/map.php'; 
     }
 
@@ -39,67 +29,52 @@ class MapController {
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
-            $points = $this->readPoints();
             $action = $_POST['action'] ?? '';
             
+            // Los handlers ahora operan directamente con el modelo
             switch ($action) {
                 case 'save_station':
-                    $success = $this->handleSaveNewPoint($points, $error);
+                    $success = $this->handleSaveNewPoint($error);
                     break;
                 case 'delete_point':
-                    $success = $this->handleDeletePoint($points, $error);
+                    $success = $this->handleDeletePoint($error);
                     break;
                 case 'update_point':
-                    $success = $this->handleUpdatePoint($points, $error);
+                    $success = $this->handleUpdatePoint($error);
                     break;
             }
         }
         
-        $chargingPoints = $this->readPoints();
-        // Carga la vista desde view/admin/create-point.php
+        // Carga los puntos actualizados desde la DB para la tabla
+        $chargingPoints = $this->model->getAllVehicles();
+        $base_path = $this->basePath;
         require __DIR__ . '/../view/admin/create-point.php';
     }
 
-    private function handleSaveNewPoint(array &$points, &$error) {
+    private function handleSaveNewPoint(&$error) {
         $name = htmlspecialchars($_POST['name'] ?? 'Charging Point');
-        $latitude = htmlspecialchars($_POST['latitude'] ?? null); 
-        $longitude = htmlspecialchars($_POST['longitude'] ?? null); 
+        $latitude = floatval($_POST['latitude'] ?? 0); 
+        $longitude = floatval($_POST['longitude'] ?? 0); 
 
-        if (empty($latitude) || empty($longitude)) {
+        if ($latitude == 0 || $longitude == 0) {
             $error = "You must click on the map to set the coordinates!";
             return null;
         }
 
-        $lastId = end($points)['id'] ?? 100;
-        $newId = $lastId + 1;
-        
-        $newPoint = [
-            'id' => $newId,
-            'name' => $name,
-            'latitude' => floatval($latitude), 
-            'longitude' => floatval($longitude),
-            'status' => 'inactive' 
-        ];
-
-        $points[] = $newPoint;
-        
-        if ($this->writePoints($points)) {
+        // CREAR EN LA BASE DE DATOS
+        if ($this->model->createVehicle($name, $latitude, $longitude)) {
             return "Point **'$name'** saved successfully.";
         } else {
-            $error = "Error writing to the data file. Check permissions on the 'data/' folder.";
+            $error = "Error saving point to the database.";
             return null;
         }
     }
 
-    private function handleDeletePoint(array &$points, &$error) {
+    private function handleDeletePoint(&$error) {
         $idToDelete = intval($_POST['point_id'] ?? 0);
         
-        $initialCount = count($points);
-        $points = array_filter($points, function($point) use ($idToDelete) {
-            return $point['id'] !== $idToDelete;
-        });
-
-        if (count($points) < $initialCount && $this->writePoints($points)) {
+        // ELIMINAR EN LA BASE DE DATOS
+        if ($this->model->deleteVehicle($idToDelete)) {
             return "Point with ID **#$idToDelete** deleted successfully.";
         } else {
             $error = "Error deleting point or point not found.";
@@ -107,7 +82,7 @@ class MapController {
         }
     }
 
-    private function handleUpdatePoint(array &$points, &$error) {
+    private function handleUpdatePoint(&$error) {
         $idToUpdate = intval($_POST['edit_id'] ?? 0);
         $newName = htmlspecialchars($_POST['edit_name'] ?? '');
         $newStatus = htmlspecialchars($_POST['edit_status'] ?? '');
@@ -119,23 +94,13 @@ class MapController {
             return null;
         }
 
-        foreach ($points as $key => $point) {
-            if ($point['id'] === $idToUpdate) {
-                $points[$key]['name'] = $newName;
-                $points[$key]['status'] = $newStatus;
-                $points[$key]['latitude'] = $newLat;
-                $points[$key]['longitude'] = $newLng;
-
-                if ($this->writePoints($points)) {
-                    return "Point **'$newName'** updated successfully.";
-                } else {
-                    $error = "Error writing to the data file.";
-                    return null;
-                }
-            }
+        // ACTUALIZAR EN LA BASE DE DATOS
+        if ($this->model->updateVehicle($idToUpdate, $newName, $newLat, $newLng, $newStatus)) {
+            return "Point **'$newName'** updated successfully.";
+        } else {
+            $error = "Error updating point in the database.";
+            return null;
         }
-        $error = "Point not found for update.";
-        return null;
     }
     
     public function showNotFound() {

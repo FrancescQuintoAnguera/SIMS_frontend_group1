@@ -57,6 +57,8 @@ CREATE TABLE "Vehicles" (
   "id_type_vehicle" int NOT NULL,
   "status_car" vehicle_status NOT NULL DEFAULT 'available',
   "vehicle_code" varchar(50) NOT NULL,
+  "latitude" DOUBLE PRECISION NOT NULL,
+  "longitude" DOUBLE PRECISION NOT NULL,
   "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "updated_at" TIMESTAMP DEFAULT NULL,
   "deleted_at" TIMESTAMP DEFAULT NULL
