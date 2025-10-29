@@ -98,28 +98,28 @@ CREATE TABLE "status" (
   "name" varchar(30) NOT NULL
 );
 
-ALTER TABLE "Users" ADD FOREIGN KEY ("id_tenan") REFERENCES "Tenants" ("id");
+ALTER TABLE "users" ADD FOREIGN KEY ("id_tenan") REFERENCES "tenants" ("id");
 
-ALTER TABLE "Users" ADD FOREIGN KEY ("id_role") REFERENCES "Roles" ("id");
+ALTER TABLE "users" ADD FOREIGN KEY ("id_role") REFERENCES "roles" ("id");
 
-ALTER TABLE "RolePermissions" ADD FOREIGN KEY ("id_role") REFERENCES "Roles" ("id");
+ALTER TABLE "rolepermissions" ADD FOREIGN KEY ("id_role") REFERENCES "roles" ("id");
 
-ALTER TABLE "RolePermissions" ADD FOREIGN KEY ("id_permission") REFERENCES "Permissions" ("id");
+ALTER TABLE "rolepermissions" ADD FOREIGN KEY ("id_permission") REFERENCES "permissions" ("id");
 
-ALTER TABLE "Vehicles" ADD FOREIGN KEY ("id_tenan") REFERENCES "Tenants" ("id");
+ALTER TABLE "vehicles" ADD FOREIGN KEY ("id_tenan") REFERENCES "tenants" ("id");
 
-ALTER TABLE "Vehicles" ADD FOREIGN KEY ("id_type_vehicle") REFERENCES "Types_vehicles" ("id");
+ALTER TABLE "vehicles" ADD FOREIGN KEY ("id_type_vehicle") REFERENCES "types_vehicles" ("id");
 
-ALTER TABLE "Routes" ADD FOREIGN KEY ("id_vehicle") REFERENCES "Vehicles" ("id");
+ALTER TABLE "routes" ADD FOREIGN KEY ("id_vehicle") REFERENCES "vehicles" ("id");
 
-ALTER TABLE "Routes" ADD FOREIGN KEY ("id_user") REFERENCES "Users" ("id");
+ALTER TABLE "routes" ADD FOREIGN KEY ("id_user") REFERENCES "users" ("id");
 
-ALTER TABLE "Tickets" ADD FOREIGN KEY ("id_satus") REFERENCES "Status" ("id");
+ALTER TABLE "tickets" ADD FOREIGN KEY ("id_satus") REFERENCES "status" ("id");
 
-ALTER TABLE "Tickets" ADD FOREIGN KEY ("id_tenan") REFERENCES "Tenants" ("id");
+ALTER TABLE "tickets" ADD FOREIGN KEY ("id_tenan") REFERENCES "tenants" ("id");
 
-ALTER TABLE "Tickets" ADD FOREIGN KEY ("id_requester") REFERENCES "Users" ("id");
+ALTER TABLE "tickets" ADD FOREIGN KEY ("id_requester") REFERENCES "users" ("id");
 
-ALTER TABLE "Tickets" ADD FOREIGN KEY ("id_assigned") REFERENCES "Users" ("id");
+ALTER TABLE "tickets" ADD FOREIGN KEY ("id_assigned") REFERENCES "users" ("id");
 
-ALTER TABLE "Tickets" ADD FOREIGN KEY ("id_vehicle") REFERENCES "Vehicles" ("id");
+ALTER TABLE "tickets" ADD FOREIGN KEY ("id_vehicle") REFERENCES "vehicles" ("id");
