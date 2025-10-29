@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # Servicio Apache con PHP
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sims_apache
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - sims_network
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html
+
+  # Servicio PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: sims_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/config/database:/docker-entrypoint-initdb.d
+    networks:
+      - sims_network
+
+  # Servicio pgAdmin para gestión de base de datos
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: sims_pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
+    networks:
+      - sims_network
+
+networks:
+  sims_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  pgadmin_data:
