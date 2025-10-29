@@ -9,7 +9,7 @@ class VehicleModel {
         $dbname = 'fleetly'; // Reemplaza con el nombre de tu DB
         $user = 'moreno'; // Reemplaza con tu usuario
         $password = 'moreno'; // Reemplaza con tu contraseña
-        $port = '5432'; 
+        $port = '5050'; 
 
         try {
             $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";

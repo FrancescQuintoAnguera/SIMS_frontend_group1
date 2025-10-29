@@ -1,4 +1,3 @@
--- Crear tipo ENUM para status_car
 CREATE TYPE vehicle_status AS ENUM ('available', 'disabled', 'maintenance');
 
 CREATE TABLE "tenants" (
