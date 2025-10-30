@@ -1,0 +1,137 @@
+<!-- Header Global EazyRide -->
+<header class="main-header">
+    <div class="header-container">
+        <div class="header-left">
+            <a href="/index.html" class="logo">
+                <img src="/images/logo.png" alt="EazyRide Logo" onerror="this.style.display='none'">
+                <span>EazyRide</span>
+            </a>
+        </div>
+        
+        <div class="header-center">
+            <h1 class="page-title" id="pageTitle"></h1>
+        </div>
+        
+        <div class="header-right">
+            <!-- Selector de idioma -->
+            <div class="language-selector">
+                <button class="lang-btn" id="langBtn">
+                    <span id="currentLang">CA</span>
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                        <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-option" data-lang="ca">
+                        <span class="flag">🇪🇸</span> Català
+                    </button>
+                    <button class="lang-option" data-lang="es">
+                        <span class="flag">🇪🇸</span> Español
+                    </button>
+                    <button class="lang-option" data-lang="en">
+                        <span class="flag">🇬🇧</span> English
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Perfil de usuario -->
+            <div class="user-menu">
+                <button class="user-btn" id="userBtn">
+                    <div class="user-avatar" id="userAvatar">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 2C8.34 2 7 3.34 7 5C7 6.66 8.34 8 10 8C11.66 8 13 6.66 13 5C13 3.34 11.66 2 10 2ZM10 14C6.67 14 4 15.34 4 17V18H16V17C16 15.34 13.33 14 10 14Z"/>
+                        </svg>
+                    </div>
+                    <span id="userName" data-i18n="nav.profile">Perfil</span>
+                </button>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="/pages/profile/perfil.html" class="dropdown-item" data-i18n="nav.myProfile">
+                        Mi Perfil
+                    </a>
+                    <a href="/pages/profile/premium.html" class="dropdown-item premium-link" data-i18n="nav.premium">
+                        ⭐ Premium
+                    </a>
+                    <a href="/pages/vehicle/purchase-time.html" class="dropdown-item" data-i18n="nav.buyPoints">
+                        Comprar Puntos
+                    </a>
+                    <a href="/pages/profile/historial.html" class="dropdown-item" data-i18n="nav.history">
+                        Historial
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item logout-btn" id="logoutBtn" data-i18n="nav.logout">
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script>
+// Header functionality
+(function() {
+    // Toggle language dropdown
+    const langBtn = document.getElementById('langBtn');
+    const langDropdown = document.getElementById('langDropdown');
+    const userBtn = document.getElementById('userBtn');
+    const userDropdown = document.getElementById('userDropdown');
+    
+    if (langBtn) {
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('show');
+            userDropdown.classList.remove('show');
+        });
+    }
+    
+    if (userBtn) {
+        userBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle('show');
+            langDropdown.classList.remove('show');
+        });
+    }
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', () => {
+        langDropdown?.classList.remove('show');
+        userDropdown?.classList.remove('show');
+    });
+    
+    // Load user info
+    loadUserInfo();
+    
+    // Logout functionality
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
+            window.location.href = '/pages/auth/login.html';
+        });
+    }
+    
+    async function loadUserInfo() {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+        
+        try {
+            const response = await fetch('/php/profile/get_profile.php', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                const userName = document.getElementById('userName');
+                if (userName && data.nom) {
+                    userName.textContent = data.nom;
+                }
+            }
+        } catch (error) {
+            console.error('Error loading user info:', error);
+        }
+    }
+})();
+</script>
