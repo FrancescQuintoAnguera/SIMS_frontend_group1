@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Compra de Puntos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test de Compra de Puntos</h1>
+    
+    <div class="test-section">
+        <h2>1. Obtener Puntos Actuales</h2>
+        <button onclick="testGetPoints()">Ejecutar Test</button>
+        <div id="result-get-points"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Comprar 400 Puntos (Paquete Básico)</h2>
+        <p><strong>Nota:</strong> Esto realizará una compra de prueba</p>
+        <button onclick="testPurchasePoints()">Ejecutar Test</button>
+        <div id="result-purchase"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Verificar Actualización</h2>
+        <button onclick="testGetPointsAgain()">Verificar Nuevo Saldo</button>
+        <div id="result-verify"></div>
+    </div>
+
+    <script>
+        function showResult(elementId, success, message, data = null) {
+            const element = document.getElementById(elementId);
+            const className = success ? 'success' : 'error';
+            let html = `<div class="test-result ${className}">
+                <strong>${success ? '✅ Éxito' : '❌ Error'}:</strong> ${message}
+            </div>`;
+            
+            if (data) {
+                html += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            }
+            
+            element.innerHTML = html;
+        }
+
+        async function testGetPoints() {
+            try {
+                const response = await fetch('../../php/api/get-points.php', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResult('result-get-points', true, 
+                        `Puntos actuales: ${data.points}`, 
+                        data
+                    );
+                } else {
+                    showResult('result-get-points', false, data.message, data);
+                }
+            } catch (error) {
+                showResult('result-get-points', false, 'Error de conexión: ' + error.message);
+            }
+        }
+
+        async function testPurchasePoints() {
+            try {
+                const response = await fetch('../../php/api/purchase-points.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        points: 400,
+                        price: 7.50,
+                        package: 'Bàsic',
+                        discount: 20
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResult('result-purchase', true, 
+                        `Compra exitosa! Puntos agregados: ${data.points_added}, Nuevo saldo: ${data.new_balance}`, 
+                        data
+                    );
+                } else {
+                    showResult('result-purchase', false, data.message, data);
+                }
+            } catch (error) {
+                showResult('result-purchase', false, 'Error de conexión: ' + error.message);
+            }
+        }
+
+        async function testGetPointsAgain() {
+            try {
+                const response = await fetch('../../php/api/get-points.php', {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResult('result-verify', true, 
+                        `Saldo actualizado verificado: ${data.points} puntos`, 
+                        data
+                    );
+                } else {
+                    showResult('result-verify', false, data.message, data);
+                }
+            } catch (error) {
+                showResult('result-verify', false, 'Error de conexión: ' + error.message);
+            }
+        }
+
+        // Test automático al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Página de test cargada');
+            console.log('Para probar:');
+            console.log('1. Haz clic en "Ejecutar Test" para ver tus puntos actuales');
+            console.log('2. Luego prueba la compra de puntos');
+            console.log('3. Finalmente verifica que el saldo se actualizó');
+        });
+    </script>
+</body>
+</html>

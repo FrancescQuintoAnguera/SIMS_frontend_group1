@@ -1,0 +1,4 @@
+pymongo
+mysql-connector-python
+tk
+requests

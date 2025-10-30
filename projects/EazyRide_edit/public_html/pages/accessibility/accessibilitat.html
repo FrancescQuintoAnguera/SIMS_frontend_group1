@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EzyRide - Accessibilitat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .phone-frame {
+            border: 12px solid #212121;
+            border-radius: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            padding: 10px;
+            background-color: #212121;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="../../images/logo.png" alt="Logo EzyRide">
+            <h1>EzyRide</h1>
+        </div>
+        <div class="header-center"><h1 class="page-title">Accessibilitat</h1></div><div class="user-info">
+            <a href="../dashboard/gestio.html" style="color: #A6EE36; text-decoration: none; font-weight: 600;">← Gestió</a>
+        </div>
+    </header>
+
+    <main>
+    <div class="phone-frame w-full max-w-sm h-[667px] flex items-center justify-center">
+        <div class="bg-white p-8 rounded-2xl shadow-inner w-full h-full flex flex-col">
+            <header class="flex items-center justify-between mb-6">
+                <a href="../dashboard/gestio.html" class="text-[#1565C0] text-sm font-semibold hover:underline">← Tornar</a>
+                <h1 class="text-2xl font-bold text-gray-900 flex-1 text-center">Opcions d'Accessibilitat</h1>
+            </header>
+
+            <main class="flex-1 overflow-y-auto space-y-6">
+                <section class="bg-[#F5F5F5] p-4 rounded-lg">
+                    <h2 class="font-bold text-lg mb-2">Mida del Text</h2>
+                    <p class="text-sm text-gray-600 mb-4">Ajusta la mida del text per a una millor llegibilitat.</p>
+                    <div class="flex items-center space-x-4">
+                        <button class="flex-1 bg-gray-300 py-2 rounded-lg hover:bg-gray-400 transition-colors duration-300" aria-label="Reduir mida del text">
+                            <span class="text-xs">A-</span>
+                        </button>
+                        <button class="flex-1 bg-gray-300 py-2 rounded-lg hover:bg-gray-400 transition-colors duration-300" aria-label="Restablir mida del text">
+                            <span class="text-base">A</span>
+                        </button>
+                        <button class="flex-1 bg-gray-300 py-2 rounded-lg hover:bg-gray-400 transition-colors duration-300" aria-label="Augmentar mida del text">
+                            <span class="text-xl">A+</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="bg-[#F5F5F5] p-4 rounded-lg">
+                    <h2 class="font-bold text-lg mb-2">Contrast</h2>
+                    <p class="text-sm text-gray-600 mb-4">Canvia el contrast de colors per a millorar la visibilitat.</p>
+                    <div class="flex justify-between items-center space-x-4">
+                        <button class="flex-1 bg-white border border-gray-300 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-300" aria-label="Mode de contrast normal">Normal</button>
+                        <button class="flex-1 bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition-colors duration-300" aria-label="Mode d'alt contrast">Alt Contrast</button>
+                    </div>
+                </section>
+
+                <section class="bg-[#F5F5F5] p-4 rounded-lg">
+                    <h2 class="font-bold text-lg mb-2">Tipus de Lletra</h2>
+                    <p class="text-sm text-gray-600 mb-4">Tria un tipus de lletra més adequat per a tu.</p>
+                    <div class="flex justify-between items-center space-x-4">
+                        <button class="flex-1 bg-gray-300 py-2 rounded-lg hover:bg-gray-400 transition-colors duration-300" aria-label="Tipus de lletra predeterminat">Predeterminat</button>
+                        <button class="flex-1 bg-gray-300 py-2 rounded-lg font-mono hover:bg-gray-400 transition-colors duration-300" aria-label="Tipus de lletra monoespaiat">Monoespaiat</button>
+                    </div>
+                </section>
+
+                <section class="bg-[#F5F5F5] p-4 rounded-lg">
+                    <h2 class="font-bold text-lg mb-2">Suport per a Lector de Pantalla</h2>
+                    <p class="text-sm text-gray-600 mb-4">Activa el mode per a una millor compatibilitat amb lectors de pantalla.</p>
+                    <div class="flex items-center">
+                        <input
+type="checkbox"
+id="screenreader-mode"
+class="h-5 w-5 rounded-full text-[#1565C0] focus:ring-[#1565C0]"
+>
+                        <label for="screenreader-mode" class="text-gray-900 ml-2">Activar mode per a lectors de pantalla</label>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    </main>
+
+    <footer>
+        <p>© 2025 EzyRide. Tots els drets reservats.</p>
+    </footer>
+</body>
+</html>

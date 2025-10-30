@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Perfil API</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        .test { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        .success { background: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin: 10px 0; }
+        .error { background: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test de APIs del Perfil</h1>
+    
+    <div class="test">
+        <h2>1. Test de Sesión</h2>
+        <button onclick="testSession()">Verificar Sesión</button>
+        <div id="result-session"></div>
+    </div>
+    
+    <div class="test">
+        <h2>2. Test de Datos Personales</h2>
+        <button onclick="testProfile()">Cargar Perfil</button>
+        <div id="result-profile"></div>
+    </div>
+    
+    <div class="test">
+        <h2>3. Test de Puntos</h2>
+        <button onclick="testPoints()">Cargar Puntos</button>
+        <div id="result-points"></div>
+    </div>
+
+    <script>
+        async function testSession() {
+            const resultDiv = document.getElementById('result-session');
+            resultDiv.innerHTML = '<p>Cargando...</p>';
+            
+            try {
+                const res = await fetch('../../php/api/session-check.php', {
+                    credentials: 'include'
+                });
+                const data = await res.json();
+                
+                if (data.loggedIn) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <strong>✅ Sesión activa</strong><br>
+                            User ID: ${data.user_id}<br>
+                            Username: ${data.username}
+                        </div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <strong>❌ No hay sesión activa</strong><br>
+                            Por favor inicia sesión primero
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <strong>❌ Error de conexión</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function testProfile() {
+            const resultDiv = document.getElementById('result-profile');
+            resultDiv.innerHTML = '<p>Cargando...</p>';
+            
+            try {
+                const res = await fetch('../../php/api/completar-perfil.php', {
+                    credentials: 'include',
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+                
+                console.log('Status:', res.status);
+                const data = await res.json();
+                console.log('Data:', data);
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <strong>✅ Datos cargados correctamente</strong>
+                        </div>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr><td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Username:</strong></td><td style="padding: 5px; border-bottom: 1px solid #ddd;">${data.data.username || 'N/A'}</td></tr>
+                            <tr><td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Fullname:</strong></td><td style="padding: 5px; border-bottom: 1px solid #ddd;">${data.data.fullname || 'No definit'}</td></tr>
+                            <tr><td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>DNI:</strong></td><td style="padding: 5px; border-bottom: 1px solid #ddd;">${data.data.dni || 'No definit'}</td></tr>
+                            <tr><td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Phone:</strong></td><td style="padding: 5px; border-bottom: 1px solid #ddd;">${data.data.phone || 'No definit'}</td></tr>
+                            <tr><td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Birthdate:</strong></td><td style="padding: 5px; border-bottom: 1px solid #ddd;">${data.data.birthdate || 'No definit'}</td></tr>
+                            <tr><td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Address:</strong></td><td style="padding: 5px; border-bottom: 1px solid #ddd;">${data.data.address || 'No definit'}</td></tr>
+                            <tr><td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Sex:</strong></td><td style="padding: 5px; border-bottom: 1px solid #ddd;">${data.data.sex || 'No definit'}</td></tr>
+                        </table>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <strong>❌ Error en la respuesta</strong><br>
+                            ${data.message || 'Sin mensaje'}
+                        </div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <strong>❌ Error de conexión</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+                console.error('Error:', error);
+            }
+        }
+
+        async function testPoints() {
+            const resultDiv = document.getElementById('result-points');
+            resultDiv.innerHTML = '<p>Cargando...</p>';
+            
+            try {
+                const res = await fetch('../../php/api/get-points.php', {
+                    credentials: 'include',
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+                
+                console.log('Status:', res.status);
+                const data = await res.json();
+                console.log('Data:', data);
+                
+                if (data.success) {
+                    const minutes = data.minutes_available || 0;
+                    const hours = Math.floor(minutes / 60);
+                    const mins = minutes % 60;
+                    
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <strong>✅ Puntos cargados correctamente</strong>
+                        </div>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr><td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Puntos:</strong></td><td style="padding: 5px; border-bottom: 1px solid #ddd;">${data.points} pts</td></tr>
+                            <tr><td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Tiempo disponible:</strong></td><td style="padding: 5px; border-bottom: 1px solid #ddd;">${hours}h ${mins}min</td></tr>
+                            <tr><td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Total comprado:</strong></td><td style="padding: 5px; border-bottom: 1px solid #ddd;">${data.total_purchased || 0} pts</td></tr>
+                            <tr><td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Total gastado:</strong></td><td style="padding: 5px; border-bottom: 1px solid #ddd;">${data.total_spent || 0} pts</td></tr>
+                            <tr><td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Es Premium:</strong></td><td style="padding: 5px; border-bottom: 1px solid #ddd;">${data.is_premium ? '⭐ Sí' : 'No'}</td></tr>
+                        </table>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <strong>❌ Error en la respuesta</strong><br>
+                            ${data.message || 'Sin mensaje'}
+                        </div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <strong>❌ Error de conexión</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+                console.error('Error:', error);
+            }
+        }
+
+        // Auto-test al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Test page loaded');
+            console.log('Click en los botones para probar cada API');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+/**
+ * Modal de confirmación para reclamar vehículos
+ * Estilos específicos para la ventana de confirmación de desbloqueo
+ */
+
+/* Overlay del modal */
+.claim-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.claim-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Contenedor del modal */
+.claim-modal-container {
+    background: #1D3854;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s ease;
+    color: #FFFFFF;
+}
+
+.claim-modal-overlay.active .claim-modal-container {
+    transform: scale(1) translateY(0);
+}
+
+/* Header del modal */
+.claim-modal-header {
+    padding: 24px;
+    border-bottom: 1px solid #2E4A68;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.claim-modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.claim-modal-close {
+    background: none;
+    border: none;
+    color: #9CA3AF;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.claim-modal-close:hover {
+    background-color: #2E4A68;
+}
+
+/* Contenido del modal */
+.claim-modal-content {
+    padding: 24px;
+}
+
+/* Información del vehículo */
+.vehicle-info-card {
+    background: #132B43;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.vehicle-info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #2E4A68;
+}
+
+.vehicle-info-row:last-child {
+    border-bottom: none;
+}
+
+.vehicle-info-label {
+    font-weight: 600;
+    color: #9CA3AF;
+    font-size: 14px;
+}
+
+.vehicle-info-value {
+    font-weight: 700;
+    color: #FFFFFF;
+    font-size: 14px;
+}
+
+/* Advertencia de cargo */
+.charge-warning {
+    background: #FEF3C7;
+    border: 2px solid #F59E0B;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: start;
+    gap: 12px;
+}
+
+.charge-warning-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.charge-warning-content {
+    flex: 1;
+}
+
+.charge-warning-title {
+    font-weight: 700;
+    color: #92400E;
+    margin-bottom: 4px;
+    font-size: 16px;
+}
+
+.charge-warning-text {
+    color: #78350F;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.charge-amount {
+    font-size: 28px;
+    font-weight: 800;
+    color: #A6EE36;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Footer del modal */
+.claim-modal-footer {
+    padding: 20px 24px;
+    border-top: 1px solid #2E4A68;
+    display: flex;
+    gap: 12px;
+}
+
+.claim-modal-button {
+    flex: 1;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.claim-modal-button-cancel {
+    background-color: #132B43;
+    color: #FFFFFF;
+}
+
+.claim-modal-button-cancel:hover {
+    background-color: #2E4A68;
+}
+
+.claim-modal-button-confirm {
+    background-color: #A6EE36;
+    color: #0D2136;
+}
+
+.claim-modal-button-confirm:hover {
+    background-color: #95dd25;
+    transform: scale(1.02);
+}
+
+.claim-modal-button-confirm:disabled {
+    background-color: #6B7280;
+    cursor: not-allowed;
+}
+
+/* Loading state */
+.claim-modal-button-loading {
+    position: relative;
+    color: transparent;
+}
+
+.claim-modal-button-loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spinner 0.6s linear infinite;
+}
+
+@keyframes spinner {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .claim-modal-container {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .claim-modal-header,
+    .claim-modal-content,
+    .claim-modal-footer {
+        padding: 16px;
+    }
+    
+    .claim-modal-title {
+        font-size: 18px;
+    }
+    
+    .charge-amount {
+        font-size: 24px;
+    }
+    
+    .claim-modal-footer {
+        flex-direction: column;
+    }
+}

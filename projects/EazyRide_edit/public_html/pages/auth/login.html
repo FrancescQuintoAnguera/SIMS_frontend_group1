@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EzyRide - Inicia Sessió</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <script src="../../js/toast.js?v=1761166892"></script>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="../../images/logo.png" alt="Logo EzyRide">
+            <h1>EzyRide</h1>
+        </div>
+        <div class="header-center"><h1 class="page-title">Iniciar Sessió</h1></div><div class="user-info">
+            <a href="../../index.html" class="btn btn-ghost">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Tornar
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <div class="container fade-in">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, var(--color-accent-primary) 0%, var(--color-accent-secondary) 100%); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg);">
+                    <svg width="40" height="40" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+                    </svg>
+                </div>
+                <p style="color: var(--color-text-secondary); font-size: 0.9375rem; margin-top: var(--spacing-md);">
+                    Accedeix al teu compte EzyRide
+                </p>
+            </div>
+
+            <form id="loginForm" autocomplete="off">
+                <div class="form-group">
+                    <label for="username" class="form-label">Usuari</label>
+                    <input type="text" id="username" name="username" class="form-input" placeholder="El teu nom d'usuari" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Contrasenya</label>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="••••••••" required>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-bottom: var(--spacing-lg);">
+                    <a href="recuperar-contrasenya.html" class="btn-link" style="font-size: 0.875rem;">
+                        He oblidat la contrasenya
+                    </a>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    Iniciar Sessió
+                </button>
+            </form>
+
+            <div id="loginMsg" style="margin-top: var(--spacing-md); text-align: center;"></div>
+
+            <div style="margin-top: var(--spacing-xl); padding-top: var(--spacing-lg); border-top: 1px solid var(--color-border-default); text-align: center;">
+                <p style="font-size: 0.9375rem; color: var(--color-text-secondary);">
+                    No tens compte? 
+                    <a href="register.html" class="btn-link">Registra't ara</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 EzyRide. Tots els drets reservats.</p>
+    </footer>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const data = {
+                username: document.getElementById('username').value.trim(),
+                password: document.getElementById('password').value
+            };
+            const msg = document.getElementById('loginMsg');
+            msg.textContent = "";
+            
+            if (!data.username || !data.password) {
+                msg.textContent = "Omple tots els camps.";
+                msg.style.color = "var(--color-error)";
+                return;
+            }
+            
+            fetch('/../../php/api/login.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {               
+                    window.location.href = '../dashboard/gestio.html';
+                } else {
+                    showToast(`Login incorrecte, l'usuari no s'ha trobat`, 'error');         
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                showToast(`Error conectant-se al servidor`, 'error');      
+            });
+        });
+    </script>
+</body>
+</html>

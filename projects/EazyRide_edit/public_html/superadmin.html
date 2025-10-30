@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Admin - Multi-Tenant Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .value {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-suspended {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .logout-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            color: #333;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+
+    <div class="container">
+        <div class="header">
+            <h1>🏢 Super Admin Panel</h1>
+            <p>Multi-Tenant Management Dashboard</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('dashboard')">📊 Dashboard</button>
+            <button class="tab-btn" onclick="switchTab('tenants')">🏢 Tenants</button>
+            <button class="tab-btn" onclick="switchTab('admins')">👥 Tenant Admins</button>
+            <button class="tab-btn" onclick="switchTab('billing')">💰 Billing</button>
+            <button class="tab-btn" onclick="switchTab('analytics')">📈 Analytics</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Tenants</h3>
+                    <div class="value" id="totalTenants">0</div>
+                    <div class="label">Companies registered</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Tenants</h3>
+                    <div class="value" id="activeTenants">0</div>
+                    <div class="label">Currently operational</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <div class="value" id="totalUsers">0</div>
+                    <div class="label">Across all tenants</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Vehicles</h3>
+                    <div class="value" id="totalVehicles">0</div>
+                    <div class="label">In all fleets</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Recent Activity</h2>
+                <div id="recentActivity">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Tenants Tab -->
+        <div id="tenants" class="tab-content">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Manage Tenants</h2>
+                    <button class="btn" onclick="showCreateTenantModal()">➕ Create New Tenant</button>
+                </div>
+
+                <input type="text" class="search-box" placeholder="🔍 Search tenants..." onkeyup="searchTenants(this.value)">
+
+                <table id="tenantsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Subdomain</th>
+                            <th>Contact</th>
+                            <th>Plan</th>
+                            <th>Status</th>
+                            <th>Users/Vehicles</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tenantsTableBody">
+                        <tr><td colspan="8">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tenant Admins Tab -->
+        <div id="admins" class="tab-content">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Tenant Administrators</h2>
+                    <button class="btn" onclick="showCreateAdminModal()">➕ Create Admin</button>
+                </div>
+
+                <table id="adminsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Full Name</th>
+                            <th>Super Admin</th>
+                            <th>Tenants Access</th>
+                            <th>Last Login</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminsTableBody">
+                        <tr><td colspan="8">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Billing Tab -->
+        <div id="billing" class="tab-content">
+            <div class="card">
+                <h2>Billing & Subscriptions</h2>
+                <p>Billing management coming soon...</p>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analytics" class="tab-content">
+            <div class="card">
+                <h2>Platform Analytics</h2>
+                <p>Analytics dashboard coming soon...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Tenant Modal -->
+    <div id="createTenantModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Tenant</h2>
+                <button class="close-modal" onclick="closeModal('createTenantModal')">×</button>
+            </div>
+            <form id="createTenantForm">
+                <div class="form-group">
+                    <label>Company Name *</label>
+                    <input type="text" name="name" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Subdomain *</label>
+                        <input type="text" name="subdomain" required placeholder="e.g., demo">
+                    </div>
+                    <div class="form-group">
+                        <label>Domain (Optional)</label>
+                        <input type="text" name="domain" placeholder="e.g., custom.com">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Contact Email *</label>
+                        <input type="email" name="contact_email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Phone</label>
+                        <input type="tel" name="contact_phone">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" name="city">
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input type="text" name="country">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Subscription Plan *</label>
+                        <select name="subscription_plan" required>
+                            <option value="basic">Basic</option>
+                            <option value="professional">Professional</option>
+                            <option value="enterprise">Enterprise</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select name="status">
+                            <option value="active">Active</option>
+                            <option value="suspended">Suspended</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-success">Create Tenant</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('createTenantModal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            // Load data for the tab
+            if (tabName === 'dashboard') loadDashboard();
+            if (tabName === 'tenants') loadTenants();
+            if (tabName === 'admins') loadAdmins();
+        }
+
+        // Load dashboard data
+        function loadDashboard() {
+            fetch('api/superadmin/dashboard.php')
+                .then(r => r.json())
+                .then(data => {
+                    document.getElementById('totalTenants').textContent = data.total_tenants || 0;
+                    document.getElementById('activeTenants').textContent = data.active_tenants || 0;
+                    document.getElementById('totalUsers').textContent = data.total_users || 0;
+                    document.getElementById('totalVehicles').textContent = data.total_vehicles || 0;
+                });
+        }
+
+        // Load tenants
+        function loadTenants() {
+            fetch('api/superadmin/tenants.php')
+                .then(r => r.json())
+                .then(data => {
+                    const tbody = document.getElementById('tenantsTableBody');
+                    if (data.tenants && data.tenants.length > 0) {
+                        tbody.innerHTML = data.tenants.map(t => `
+                            <tr>
+                                <td>${t.id}</td>
+                                <td><strong>${t.name}</strong></td>
+                                <td>${t.subdomain}.eazyride.com</td>
+                                <td>${t.contact_email}</td>
+                                <td>${t.subscription_plan}</td>
+                                <td><span class="status-badge status-${t.status}">${t.status}</span></td>
+                                <td>${t.total_users || 0} / ${t.total_vehicles || 0}</td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-sm" onclick="viewTenant(${t.id})">View</button>
+                                    <button class="btn btn-sm btn-secondary" onclick="editTenant(${t.id})">Edit</button>
+                                </td>
+                            </tr>
+                        `).join('');
+                    } else {
+                        tbody.innerHTML = '<tr><td colspan="8">No tenants found</td></tr>';
+                    }
+                });
+        }
+
+        // Load admins
+        function loadAdmins() {
+            fetch('api/superadmin/admins.php')
+                .then(r => r.json())
+                .then(data => {
+                    const tbody = document.getElementById('adminsTableBody');
+                    if (data.admins && data.admins.length > 0) {
+                        tbody.innerHTML = data.admins.map(a => `
+                            <tr>
+                                <td>${a.id}</td>
+                                <td><strong>${a.username}</strong></td>
+                                <td>${a.email}</td>
+                                <td>${a.fullname}</td>
+                                <td>${a.is_super_admin ? '✅ Yes' : '❌ No'}</td>
+                                <td>${a.tenant_count || 0} tenants</td>
+                                <td>${a.last_login || 'Never'}</td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-sm btn-secondary" onclick="editAdmin(${a.id})">Edit</button>
+                                </td>
+                            </tr>
+                        `).join('');
+                    } else {
+                        tbody.innerHTML = '<tr><td colspan="8">No admins found</td></tr>';
+                    }
+                });
+        }
+
+        // Modal functions
+        function showCreateTenantModal() {
+            document.getElementById('createTenantModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function showCreateAdminModal() {
+            alert('Create admin functionality coming soon!');
+        }
+
+        // Form submission
+        document.getElementById('createTenantForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            
+            fetch('api/superadmin/create-tenant.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Tenant created successfully!');
+                    closeModal('createTenantModal');
+                    loadTenants();
+                    this.reset();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            });
+        });
+
+        // Search tenants
+        function searchTenants(query) {
+            const rows = document.querySelectorAll('#tenantsTableBody tr');
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(query.toLowerCase()) ? '' : 'none';
+            });
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'api/superadmin/logout.php';
+            }
+        }
+
+        // Load initial data
+        loadDashboard();
+    </script>
+</body>
+</html>
